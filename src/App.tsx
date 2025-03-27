@@ -1,10 +1,11 @@
-import './App.css'
+import { MainPage } from "./Components/MainPage";
+import { PdfRefsContextProvider } from "./Context/PDFRefsContext/PDFRefsContextProvider";
 
-function App() {
+export function App() {
 
   return (
-
+    <PdfRefsContextProvider>
+		  <MainPage/>
+    </PdfRefsContextProvider>
   )
 }
-
-export default App
