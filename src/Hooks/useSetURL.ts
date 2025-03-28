@@ -1,10 +1,11 @@
 import { PDFDocument } from "pdf-lib";
-import { useState } from "react";
+import { PDFContext } from "../Context/PDFContext/PDFContext";
+import { useContext } from "react";
 
-export function useGetURL() {
-    const [url, setUrl] = useState<string>("");
+export function useSetURL() {
+    const context = useContext(PDFContext);
 
-    function getURL(input: File): void {
+    function setURL(input: File): void {
         const reader = new FileReader();
         reader.readAsDataURL(input);
 
@@ -13,15 +14,16 @@ export function useGetURL() {
         };
 
         reader.onload = async () => {
-            //Converts given input into PDF URL
             if(typeof reader.result === "string") {
                 const doc = await PDFDocument.load(reader.result);
                 const bytes = await doc.save();
                 const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
-                setUrl(URL.createObjectURL(pdfBlob));
+
+                context.setPDF!(doc);
+                context.setURL!(URL.createObjectURL(pdfBlob));
             };
         };
     };
 
-    return { getURL, url };
+    return { setURL };
 };
