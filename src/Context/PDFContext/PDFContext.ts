@@ -8,4 +8,4 @@ interface PDFInterface {
     setURL?: Dispatch<SetStateAction<string | undefined>>
 };
 
-export const PDFContext = createContext<PDFInterface>({});
+export const pdfContext = createContext<PDFInterface>({});

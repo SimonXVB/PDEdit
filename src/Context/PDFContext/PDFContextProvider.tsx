@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { PDFContext } from "./PDFContext";
+import { pdfContext } from "./pdfContext";
 import { PDFDocument } from "pdf-lib";
 
 export function PDFContextProvider({ children }: { children: React.ReactNode }) {
@@ -7,8 +7,8 @@ export function PDFContextProvider({ children }: { children: React.ReactNode }) 
     const [url, setURL] = useState<string>();
 
     return (
-        <PDFContext.Provider value={{ pdf, setPDF, url, setURL }}>
+        <pdfContext.Provider value={{ pdf, setPDF, url, setURL }}>
             {children}
-        </PDFContext.Provider>
+        </pdfContext.Provider>
     )
 };
