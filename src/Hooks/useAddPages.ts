@@ -10,14 +10,8 @@ export function useAddPages() {
     async function addPages(input: File): Promise<void> {
         try {
             const mergedPdf = await PDFDocument.create();
-
             const reader = new FileReader();
             reader.readAsDataURL(input);
-    
-            reader.onerror = (error) => {
-                errContext.setErrors!(prev => [...prev, "fileReadError"]);
-                console.error("An error occurred: ", error);
-            };
     
             reader.onload = async () => {
                 if(typeof reader.result === "string") {

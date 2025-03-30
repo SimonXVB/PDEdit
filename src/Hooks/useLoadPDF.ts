@@ -1,42 +1,57 @@
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { pdfContext } from "../Context/PDFContext/pdfContext";
+import { errorContext } from "../Context/ErrorContext/errorContext";
 
 export function useLoadPDF() {
-    const [pageNum, setPageNum] = useState<number>(0);
+    const [pdfImgs, setPDFImgs] = useState<string[]>([]);
 
-    async function loadPDF(url: string, canvasRefs: HTMLCanvasElement[]): Promise<void> {
-        if(!url || !canvasRefs ) return;
+    const context = useContext(pdfContext);
+    const errContext = useContext(errorContext);
+
+    async function loadPDF(url: string): Promise<void> {
+        if(!url) return;
+
+        context.setPDFLoading!(true);
 
         GlobalWorkerOptions.workerSrc = new URL(
             'pdfjs-dist/build/pdf.worker.min.mjs',
             import.meta.url
         ).toString();
         
-        const pdf = getDocument(url);
-        const loadedPDF = await pdf.promise;
-        setPageNum(loadedPDF._pdfInfo.numPages);
+        try {
+            const imgs = [];
 
-        for(let i = 1; i <= loadedPDF._pdfInfo.numPages; i++) {
-            const page = await loadedPDF.getPage(i);
-            const viewport = page.getViewport({ scale: 1.5 });
-
-            const canvas: HTMLCanvasElement = canvasRefs[i - 1];
-            const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
-            if(ctx === null) return;
-            
-            canvas.width = Math.floor(viewport.width);
-            canvas.height = Math.floor(viewport.height);
-            canvas.style.width = Math.floor(viewport.width) + "px";
-            canvas.style.height =  Math.floor(viewport.height) + "px";
+            const pdf = getDocument(url);
+            const loadedPDF = await pdf.promise;
     
-            const  renderContext = {
-                canvasContext: ctx,
-                viewport: viewport
+            for(let i = 1; i <= loadedPDF._pdfInfo.numPages; i++) {
+                const page = await loadedPDF.getPage(i);
+                const viewport = page.getViewport({ scale: 1.5 });
+    
+                const canvas: HTMLCanvasElement = document.createElement("canvas");
+                const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
+                
+                canvas.width = Math.floor(viewport.width);
+                canvas.height = Math.floor(viewport.height);
+    
+                const  renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+        
+                await page.render(renderContext).promise;
+                imgs.push(canvas.toDataURL("image/png"));
             };
     
-            page.render(renderContext);
-        };
+            setPDFImgs(imgs);
+            context.setPDFLoading!(false);
+        } catch (error) {
+            context.setPDFLoading!(false);
+            errContext.setErrors!(prev => [...prev, "setURLError"]);
+            console.error("An error occurred: ", error);
+        }
     };
 
-    return { loadPDF, pageNum };
+    return { loadPDF, pdfImgs };
 };

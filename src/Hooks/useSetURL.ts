@@ -13,16 +13,11 @@ export function useSetURL() {
             return;
         };
 
-        const reader = new FileReader();
-        reader.readAsDataURL(input);
-
-        reader.onerror = (error) => {
-            errContext.setErrors!(prev => [...prev, "fileReadError"]);
-            console.error("An error occurred: ", error);
-        };
-
-        reader.onload = async () => {
-            try {
+        try {
+            const reader = new FileReader();
+            reader.readAsDataURL(input);
+    
+            reader.onload = async () => {
                 if(typeof reader.result === "string") {
                     const doc = await PDFDocument.load(reader.result);
                     const bytes = await doc.save();
@@ -31,10 +26,10 @@ export function useSetURL() {
                     context.setPDF!(doc);
                     context.setURL!(URL.createObjectURL(pdfBlob));
                 };
-            } catch (error) {
-                errContext.setErrors!(prev => [...prev, "setURLError"]);
-                console.error("An error occurred: ", error);
-            }
+            };
+        } catch (error) {
+            errContext.setErrors!(prev => [...prev, "setURLError"]);
+            console.error("An error occurred: ", error);
         };
     };
 

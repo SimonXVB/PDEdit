@@ -5,7 +5,9 @@ interface PDFInterface {
     pdf?: PDFDocument,
     setPDF?: Dispatch<SetStateAction<PDFDocument | undefined>>
     url?: string,
-    setURL?: Dispatch<SetStateAction<string | undefined>>
+    setURL?: Dispatch<SetStateAction<string>>,
+    pdfLoading?: boolean,
+    setPDFLoading?: Dispatch<SetStateAction<boolean>>
 };
 
 export const pdfContext = createContext<PDFInterface>({});

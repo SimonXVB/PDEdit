@@ -16,7 +16,7 @@ export function useRemovePage() {
             const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
             
             context.setPDF!(newDoc);
-            context.setURL!(URL.createObjectURL(pdfBlob));        
+            context.setURL!(URL.createObjectURL(pdfBlob));
         } catch (error) {
             errContext.setErrors!(prev => [...prev, "removePageError"]);
             console.error("An error occurred: ", error);
