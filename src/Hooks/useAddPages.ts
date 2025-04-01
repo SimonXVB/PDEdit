@@ -15,7 +15,7 @@ export function useAddPages() {
     
             reader.onload = async () => {
                 if(typeof reader.result === "string") {
-                    const docA = context.pdf!;
+                    const docA = context.pdfInfo!.pdfDoc;
                     const docB = await PDFDocument.load(reader.result);
     
                     const copiedPagesA = await mergedPdf.copyPages(docA!, docA!.getPageIndices());
@@ -27,8 +27,7 @@ export function useAddPages() {
                     const bytes = await mergedPdf.save();
                     const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
     
-                    context.setPDF!(mergedPdf);
-                    context.setURL!(URL.createObjectURL(pdfBlob));
+                    context.setPDFInfo!({pdfDoc: mergedPdf, pdfURL: URL.createObjectURL(pdfBlob)});
                 };
             };
         } catch (error) {

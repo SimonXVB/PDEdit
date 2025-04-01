@@ -22,10 +22,10 @@ export function MainPage() {
                 <LoadingSpinner />
             }
             <div className="flex flex-col items-center justify-center grow-1">
-                {!context.url &&
+                {!context.pdfInfo!.pdfURL &&
                     <UploadButton handleFile={handleFile}/>
                 }
-                <RenderPages url={context.url!}/>
+                <RenderPages url={context.pdfInfo!.pdfURL!}/>
             </div>
         </>
     )

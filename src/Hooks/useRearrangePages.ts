@@ -3,28 +3,35 @@ import { pdfContext } from "../Context/PDFContext/pdfContext";
 import { errorContext } from "../Context/ErrorContext/errorContext";
 import { PDFPage } from "pdf-lib";
 
-type IndexArrTuple = readonly [number, number]
-
 export function useRearrangePages() {
     const context = useContext(pdfContext);
     const errContext = useContext(errorContext);
 
-    async function rearrangePages(indexArr: IndexArrTuple) {
+    async function rearrangePages(currentPage: number, rearrangePage: number) {
         try {
-            const pdf = context.pdf!;
+            const pdf = context.pdfInfo!.pdfDoc!;
             const pdfPages: PDFPage[] = pdf.getPages();
     
-            pdf.removePage(indexArr[0]);
-            pdf.insertPage(indexArr[0], pdfPages[indexArr[1]]);
+            // Updates the actual PDF file
+            pdf.removePage(currentPage);
+            pdf.insertPage(currentPage, pdfPages[rearrangePage]);
             
-            pdf.removePage(indexArr[1]);
-            pdf.insertPage(indexArr[1], pdfPages[indexArr[0]]);
+            pdf.removePage(rearrangePage);
+            pdf.insertPage(rearrangePage, pdfPages[currentPage]);
     
             const bytes = await pdf.save();
             const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
-    
-            context.setPDF!(pdf);
-            context.setURL!(URL.createObjectURL(pdfBlob));
+
+            context.setPDFInfo!({pdfDoc: pdf, pdfURL: URL.createObjectURL(pdfBlob)});
+
+            //Updates the PDFPages array (context.pdfPages)
+            const pdfArray = context.pdfPages!;
+
+            const el = pdfArray[rearrangePage];
+            pdfArray[rearrangePage] = pdfArray[currentPage];
+            pdfArray[currentPage] = el;
+
+            context.setPDFPages!(pdfArray);
         } catch (error) {
             errContext.setErrors!(prev => [...prev, "rearrangePageError"]);
             console.error("An error occurred: ", error);

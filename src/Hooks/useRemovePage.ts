@@ -6,17 +6,20 @@ export function useRemovePage() {
     const context = useContext(pdfContext);
     const errContext = useContext(errorContext);
 
-    async function removePage(page: number) {
+    async function removePage(index: number) {
         try {
-            const newDoc = context.pdf!;
+            const newDoc = context.pdfInfo!.pdfDoc!;
 
-            newDoc.removePage(page);
-    
+            // Updates the actual PDF file
+            newDoc.removePage(index);
+
             const bytes = await newDoc.save();
             const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
             
-            context.setPDF!(newDoc);
-            context.setURL!(URL.createObjectURL(pdfBlob));
+            context.setPDFInfo!({pdfDoc: newDoc, pdfURL: URL.createObjectURL(pdfBlob)});
+
+            //Updates the PDFPages array (context.pdfPages)
+            context.setPDFPages!(prev => prev.filter((_el, i) => i !== index));
         } catch (error) {
             errContext.setErrors!(prev => [...prev, "removePageError"]);
             console.error("An error occurred: ", error);

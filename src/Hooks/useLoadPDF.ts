@@ -1,11 +1,9 @@
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { pdfContext } from "../Context/PDFContext/pdfContext";
 import { errorContext } from "../Context/ErrorContext/errorContext";
 
 export function useLoadPDF() {
-    const [pdfImgs, setPDFImgs] = useState<string[]>([]);
-
     const context = useContext(pdfContext);
     const errContext = useContext(errorContext);
 
@@ -20,10 +18,9 @@ export function useLoadPDF() {
         ).toString();
         
         try {
-            const imgs = [];
-
             const pdf = getDocument(url);
             const loadedPDF = await pdf.promise;
+            const pdfArray = [];
     
             for(let i = 1; i <= loadedPDF._pdfInfo.numPages; i++) {
                 const page = await loadedPDF.getPage(i);
@@ -34,17 +31,33 @@ export function useLoadPDF() {
                 
                 canvas.width = Math.floor(viewport.width);
                 canvas.height = Math.floor(viewport.height);
-    
+
                 const  renderContext = {
                     canvasContext: ctx,
                     viewport: viewport
                 };
+
+                const pdfCanvas = document.createElement("canvas");
+                pdfCanvas.style.width = Math.floor(viewport.width) + "px";
+                pdfCanvas.style.height = Math.floor(viewport.height) + "px";
         
                 await page.render(renderContext).promise;
-                imgs.push(canvas.toDataURL("image/png"));
+
+                //Evaluates whether an element at the given index is present. If an element is present, returns the object with same canvas and updated image.
+                if(context.pdfPages![i - 1]) {
+                    pdfArray.push({
+                        pdfImg: canvas.toDataURL("image/png"),
+                        pdfCanvas: context.pdfPages![i - 1].pdfCanvas
+                    });
+                } else {
+                    pdfArray.push({
+                        pdfImg: canvas.toDataURL("image/png"),
+                        pdfCanvas: pdfCanvas
+                    });
+                };
             };
-    
-            setPDFImgs(imgs);
+
+            context.setPDFPages!(pdfArray);
             context.setPDFLoading!(false);
         } catch (error) {
             context.setPDFLoading!(false);
@@ -53,5 +66,5 @@ export function useLoadPDF() {
         }
     };
 
-    return { loadPDF, pdfImgs };
+    return { loadPDF };
 };

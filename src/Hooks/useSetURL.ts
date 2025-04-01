@@ -19,18 +19,21 @@ export function useSetURL() {
     
             reader.onload = async () => {
                 if(typeof reader.result === "string") {
-                    const doc = await PDFDocument.load(reader.result);
-                    const bytes = await doc.save();
+                    const pdf = await PDFDocument.load(reader.result);
+                    const bytes = await pdf.save();
                     const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
     
-                    context.setPDF!(doc);
-                    context.setURL!(URL.createObjectURL(pdfBlob));
+                    context.setPDFInfo!(
+                        {
+                            pdfDoc: pdf, 
+                            pdfURL: URL.createObjectURL(pdfBlob)
+                        });
                 };
             };
         } catch (error) {
             errContext.setErrors!(prev => [...prev, "setURLError"]);
             console.error("An error occurred: ", error);
-        };
+        }
     };
 
     return { setURL };
