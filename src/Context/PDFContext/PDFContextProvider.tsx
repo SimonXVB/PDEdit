@@ -2,12 +2,16 @@ import { useState } from "react"
 import { pdfContext } from "./pdfContext";
 import { PDFDocument } from "pdf-lib";
 
-export type PDFPagesType = { pdfImg?: string, pdfCanvas?: HTMLCanvasElement }[];
+export type PDFPagesType = { 
+    pdfImg?: string, 
+    pdfCanvas?: HTMLCanvasElement,
+    originalSize?: { height: number, width: number }
+}[];
 
 export interface PDFInfoInterface {
     pdfDoc?: PDFDocument,
     pdfURL?: string
-}
+};
 
 export function PDFContextProvider({ children }: { children: React.ReactNode }) {
     const [pdfInfo, setPDFInfo] = useState<PDFInfoInterface>({});

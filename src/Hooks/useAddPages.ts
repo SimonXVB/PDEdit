@@ -4,8 +4,8 @@ import { PDFDocument } from "pdf-lib";
 import { errorContext } from "../Context/ErrorContext/errorContext";
 
 export function useAddPages() {
-    const context = useContext(pdfContext);
-    const errContext = useContext(errorContext);
+    const pdfCTX = useContext(pdfContext);
+    const errorCTX = useContext(errorContext);
     
     async function addPages(input: File): Promise<void> {
         try {
@@ -15,7 +15,7 @@ export function useAddPages() {
     
             reader.onload = async () => {
                 if(typeof reader.result === "string") {
-                    const docA = context.pdfInfo!.pdfDoc;
+                    const docA = pdfCTX.pdfInfo!.pdfDoc;
                     const docB = await PDFDocument.load(reader.result);
     
                     const copiedPagesA = await mergedPdf.copyPages(docA!, docA!.getPageIndices());
@@ -27,11 +27,11 @@ export function useAddPages() {
                     const bytes = await mergedPdf.save();
                     const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
     
-                    context.setPDFInfo!({pdfDoc: mergedPdf, pdfURL: URL.createObjectURL(pdfBlob)});
+                    pdfCTX.setPDFInfo!({pdfDoc: mergedPdf, pdfURL: URL.createObjectURL(pdfBlob)});
                 };
             };
         } catch (error) {
-            errContext.setErrors!(prev => [...prev, "addPageError"]);
+            errorCTX.setErrors!(prev => [...prev, "addPageError"]);
             console.error("An error occurred: ", error);
         }
     };

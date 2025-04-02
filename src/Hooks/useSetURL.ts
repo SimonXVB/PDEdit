@@ -4,12 +4,12 @@ import { pdfContext } from "../Context/PDFContext/pdfContext";
 import { errorContext } from "../Context/ErrorContext/errorContext";
 
 export function useSetURL() {
-    const context = useContext(pdfContext);
-    const errContext = useContext(errorContext);
+    const pdfCTX = useContext(pdfContext);
+    const errorCTX = useContext(errorContext);
 
     function setURL(input: File): void {
         if(input.type !== "application/pdf") {
-            errContext.setErrors!(prev => [...prev, "fileTypeError"]);
+            errorCTX.setErrors!(prev => [...prev, "fileTypeError"]);
             return;
         };
 
@@ -23,15 +23,16 @@ export function useSetURL() {
                     const bytes = await pdf.save();
                     const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
     
-                    context.setPDFInfo!(
+                    pdfCTX.setPDFInfo!(
                         {
                             pdfDoc: pdf, 
                             pdfURL: URL.createObjectURL(pdfBlob)
-                        });
+                        }
+                    );
                 };
             };
         } catch (error) {
-            errContext.setErrors!(prev => [...prev, "setURLError"]);
+            errorCTX.setErrors!(prev => [...prev, "setURLError"]);
             console.error("An error occurred: ", error);
         }
     };

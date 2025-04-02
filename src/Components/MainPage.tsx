@@ -6,8 +6,7 @@ import { LoadingSpinner } from "./Individuals/LoadingSpinner";
 import { UploadButton } from "./Individuals/UploadButton";
 
 export function MainPage() {
-    const context = useContext(pdfContext);
-
+    const pdfCTX = useContext(pdfContext);
     const { setURL } = useSetURL();
 
     function handleFile(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -18,14 +17,14 @@ export function MainPage() {
 
     return (
         <>
-            {context.pdfLoading &&
+            {pdfCTX.pdfLoading &&
                 <LoadingSpinner />
             }
             <div className="flex flex-col items-center justify-center grow-1">
-                {!context.pdfInfo!.pdfURL &&
+                {!pdfCTX.pdfInfo!.pdfURL &&
                     <UploadButton handleFile={handleFile}/>
                 }
-                <RenderPages url={context.pdfInfo!.pdfURL!}/>
+                <RenderPages url={pdfCTX.pdfInfo!.pdfURL!}/>
             </div>
         </>
     )
