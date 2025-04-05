@@ -8,10 +8,6 @@ export function useLoadPDF() {
     const errorCTX = useContext(errorContext);
 
     async function loadPDF(url: string): Promise<void> {
-        if(!url) return;
-
-        pdfCTX.setPDFLoading!(true);
-
         GlobalWorkerOptions.workerSrc = new URL(
             'pdfjs-dist/build/pdf.worker.min.mjs',
             import.meta.url
@@ -20,7 +16,6 @@ export function useLoadPDF() {
         try {
             const pdf = getDocument(url);
             const loadedPDF = await pdf.promise;
-            const pdfArray = [];
     
             for(let i = 1; i <= loadedPDF._pdfInfo.numPages; i++) {
                 const page = await loadedPDF.getPage(i);
@@ -36,39 +31,26 @@ export function useLoadPDF() {
                     canvasContext: ctx,
                     viewport: viewport
                 };
+                
+                await page.render(renderContext).promise;
 
                 const pdfCanvas = document.createElement("canvas");
                 pdfCanvas.width = viewport.width;
                 pdfCanvas.height = viewport.height;
-                
-                await page.render(renderContext).promise;
 
-                //Evaluates whether an element at the given index is present. If an element is present, returns the object with same canvas and updated image.
-                if(pdfCTX.pdfPages![i - 1]) {
-                    pdfArray.push({
-                        pdfImg: canvas.toDataURL("image/png"),
-                        pdfCanvas: pdfCTX.pdfPages![i - 1].pdfCanvas,
-                        originalSize: { 
-                            width: pdfCTX.pdfPages![i - 1].originalSize!.width, 
-                            height: pdfCTX.pdfPages![i - 1].originalSize!.height
-                        }
-                    });
-                } else {
-                    pdfArray.push({
-                        pdfImg: canvas.toDataURL("image/png"),
-                        pdfCanvas: pdfCanvas,
-                        originalSize: { 
-                            width: viewport.width, 
-                            height: viewport.height
-                        }
-                    });
+                const pdfPage = {
+                    pdfImg: canvas.toDataURL("image/png"),
+                    pdfCanvas: pdfCanvas,
+                    pdfInfo: {
+                        height: viewport.height,
+                        width: viewport.width,
+                        rotation: 0
+                    }
                 };
-            };
 
-            pdfCTX.setPDFPages!(pdfArray);
-            pdfCTX.setPDFLoading!(false);
+                pdfCTX.setPDFPages!(prev => [...prev, pdfPage]);
+            };
         } catch (error) {
-            pdfCTX.setPDFLoading!(false);
             errorCTX.setErrors!(prev => [...prev, "setURLError"]);
             console.error("An error occurred: ", error);
         }

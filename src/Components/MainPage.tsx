@@ -1,31 +1,43 @@
-import { useSetURL } from "../Hooks/useSetURL";
 import { RenderPages } from "./RenderPages";
 import { pdfContext } from "../Context/PDFContext/pdfContext";
-import { useContext } from "react";
-import { LoadingSpinner } from "./Individuals/LoadingSpinner";
+import { useContext, useEffect, useRef } from "react";
+import { useLoadInitialPDF } from "../Hooks/useLoadInitialPDF";
 import { UploadButton } from "./Individuals/UploadButton";
+import { Sidebar } from "./Sidebar";
+import { useZoomPages } from "../Hooks/useZoomPages";
 
 export function MainPage() {
     const pdfCTX = useContext(pdfContext);
-    const { setURL } = useSetURL();
+    const { loadInitialPDF } = useLoadInitialPDF();
+
+    const divRef = useRef<HTMLDivElement>(null);
 
     function handleFile(e: React.ChangeEvent<HTMLInputElement>): void {
         if(e.target.files) {
-            setURL(e.target.files[0]);
+            loadInitialPDF(e.target.files[0]);
         };
     };
 
+    const { ctrlSZoom } = useZoomPages();
+
+    useEffect(() => {
+        const ref = divRef.current!;
+
+        ref.addEventListener("wheel", ctrlSZoom);
+        return () => ref.removeEventListener("wheel", ctrlSZoom);
+    });
+
     return (
-        <>
-            {pdfCTX.pdfLoading &&
-                <LoadingSpinner />
-            }
+        <div ref={divRef} className="grow-[1] flex justify-center items-center">
             <div className="flex flex-col items-center justify-center grow-1">
-                {!pdfCTX.pdfInfo!.pdfURL &&
-                    <UploadButton handleFile={handleFile}/>
+                {!pdfCTX.pdfDoc && <UploadButton handleFile={handleFile}/>}
+                {pdfCTX.pdfPages!.length > 0 && 
+                    <div className="flex">
+                        <RenderPages/>
+                        <Sidebar />
+                    </div>
                 }
-                <RenderPages url={pdfCTX.pdfInfo!.pdfURL!}/>
             </div>
-        </>
+        </div>
     )
 };

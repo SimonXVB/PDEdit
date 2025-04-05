@@ -2,12 +2,15 @@ import { PDFDocument } from "pdf-lib";
 import { useContext } from "react";
 import { pdfContext } from "../Context/PDFContext/pdfContext";
 import { errorContext } from "../Context/ErrorContext/errorContext";
+import { useLoadPDF } from "./useLoadPDF";
 
-export function useSetURL() {
+export function useLoadInitialPDF() {
     const pdfCTX = useContext(pdfContext);
     const errorCTX = useContext(errorContext);
+    
+    const { loadPDF } = useLoadPDF();
 
-    function setURL(input: File): void {
+    function loadInitialPDF(input: File): void {
         if(input.type !== "application/pdf") {
             errorCTX.setErrors!(prev => [...prev, "fileTypeError"]);
             return;
@@ -22,13 +25,9 @@ export function useSetURL() {
                     const pdf = await PDFDocument.load(reader.result);
                     const bytes = await pdf.save();
                     const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
-    
-                    pdfCTX.setPDFInfo!(
-                        {
-                            pdfDoc: pdf, 
-                            pdfURL: URL.createObjectURL(pdfBlob)
-                        }
-                    );
+                    pdfCTX.setPDFDoc!(pdf);
+
+                    loadPDF(URL.createObjectURL(pdfBlob));
                 };
             };
         } catch (error) {
@@ -37,5 +36,5 @@ export function useSetURL() {
         }
     };
 
-    return { setURL };
+    return { loadInitialPDF };
 };

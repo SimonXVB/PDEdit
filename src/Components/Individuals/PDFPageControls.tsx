@@ -5,13 +5,13 @@ import { useRemovePage } from "../../Hooks/useRemovePage";
 export function PDFPageControls({ pageNum, index }: { pageNum: number, index: number }) {
     const { removePage } = useRemovePage();
     const { rearrangePages } = useRearrangePages();
-    const { rotatePage} = useRotatePage();
+    const { rotatePage } = useRotatePage();
 
     return (
-        <div className="flex flex-col items-center m-4">
+        <div className="flex gap-4 items-center mb-4">
             <button onClick={() => rotatePage(index)}>Rotate</button>
             {index > 0 &&
-                <button onClick={() => rearrangePages(0, index - 1)}>Move Up</button>
+                <button onClick={() => rearrangePages(index, index - 1)}>Move Up</button>
             }
             <div>{index + 1}</div>
             {index < (pageNum - 1) &&

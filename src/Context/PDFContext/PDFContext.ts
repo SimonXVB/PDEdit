@@ -1,9 +1,10 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { PDFPagesType, PDFInfoInterface } from "./PDFContextProvider";
+import { PDFPagesType } from "./PDFContextProvider";
+import { PDFDocument } from "pdf-lib";
  
 interface PDFInterface {
-    pdfInfo?: PDFInfoInterface,
-    setPDFInfo?: Dispatch<SetStateAction<PDFInfoInterface>>
+    pdfDoc?: PDFDocument,
+    setPDFDoc?: Dispatch<SetStateAction<PDFDocument | undefined>>
     pdfPages?: PDFPagesType,
     setPDFPages?: Dispatch<SetStateAction<PDFPagesType>>,
     pdfLoading?: boolean,

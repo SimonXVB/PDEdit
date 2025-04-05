@@ -7,9 +7,9 @@ export function useRearrangePages() {
     const pdfCTX = useContext(pdfContext);
     const errorCTX = useContext(errorContext);
 
-    async function rearrangePages(currentPage: number, rearrangePage: number) {
+    async function rearrangePages(currentPage: number, rearrangePage: number): Promise<void> {
         try {
-            const pdf = pdfCTX.pdfInfo!.pdfDoc!;
+            const pdf = pdfCTX.pdfDoc!;
             const pdfPages: PDFPage[] = pdf.getPages();
     
             // Updates the actual PDF file
@@ -19,19 +19,21 @@ export function useRearrangePages() {
             pdf.removePage(rearrangePage);
             pdf.insertPage(rearrangePage, pdfPages[currentPage]);
     
-            const bytes = await pdf.save();
-            const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
+            await pdf.save();
 
-            pdfCTX.setPDFInfo!({pdfDoc: pdf, pdfURL: URL.createObjectURL(pdfBlob)});
+            pdfCTX.setPDFDoc!(pdf);
 
             //Updates the PDFPages array (context.pdfPages)
-            const pdfArray = pdfCTX.pdfPages!;
 
-            const el = pdfArray[rearrangePage];
-            pdfArray[rearrangePage] = pdfArray[currentPage];
-            pdfArray[currentPage] = el;
+            pdfCTX.setPDFPages!(prev => {
+                const pdfArray = [...prev];
 
-            pdfCTX.setPDFPages!(pdfArray);
+                const el = pdfArray[rearrangePage];
+                pdfArray[rearrangePage] = pdfArray[currentPage];
+                pdfArray[currentPage] = el;
+
+                return pdfArray;
+            });
         } catch (error) {
             errorCTX.setErrors!(prev => [...prev, "rearrangePageError"]);
             console.error("An error occurred: ", error);

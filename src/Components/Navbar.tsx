@@ -1,9 +1,15 @@
+import { useContext, useRef } from "react";
 import { useAddPages } from "../Hooks/useAddPages";
 import { useZoomPages } from "../Hooks/useZoomPages";
+import { NavbarButton } from "./Individuals/3DButton";
+import { pdfContext } from "../Context/PDFContext/pdfContext";
 
 export function Navbar() {
     const { addPages } = useAddPages();
     const { zoomPages } = useZoomPages();
+
+    const pdfCTX = useContext(pdfContext);
+    const inputButtonRef = useRef<HTMLInputElement>(null);
  
     function handleAddPage(e: React.ChangeEvent<HTMLInputElement>): void {
         if(e.target.files) {
@@ -11,19 +17,22 @@ export function Navbar() {
         };
     };
 
+    function clickInput() {
+        inputButtonRef.current?.click();
+    };
+
     return (
-        <nav className="flex justify-between p-4 border-2 border-purple-500">
-            <div id="navbarLogo">
-                Logo
-            </div>
-            <div id="navbarControls" className="flex gap-4">
-                <button onClick={() => zoomPages("plus")}>Zoom In</button>
-                <button onClick={() => zoomPages("minus")}>Zoom Out</button>
-                <span className="relative w-fit">
-                    <input type="file" onChange={handleAddPage} className="cursor-pointer absolute top-0 left-0 w-full opacity-0"/>
-                    <div>Add PDF</div>
-                </span>
-            </div>
-        </nav>
+        <div className="flex justify-center">
+            {pdfCTX.pdfDoc && 
+                <nav className="flex gap-4 p-3 border-4 border-[#A294F9] rounded-4xl mx-auto my-16">
+                    <NavbarButton title={"Zoom In"} onClick={() => zoomPages("plus")}>Zoom In</NavbarButton>
+                    <NavbarButton title={"Zoom Out"} onClick={() => zoomPages("minus")}>Zoom Out</NavbarButton>
+                    <NavbarButton title={"Add PDF"} onClick={clickInput}>
+                        <input ref={inputButtonRef} type="file" onChange={handleAddPage} className="cursor-pointer absolute h-full top-0 left-0 w-full opacity-0 hidden"/>
+                        <p>Add PDF</p>
+                    </NavbarButton>
+                </nav>
+            }
+        </div>
     )
 };

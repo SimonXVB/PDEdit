@@ -7,9 +7,9 @@ export function useRotatePage() {
     const pdfCTX = useContext(pdfContext);
     const errorCTX = useContext(errorContext);
 
-    async function rotatePage(index: number) {
+    async function rotatePage(index: number): Promise<void> {
         try {
-            const pdf = pdfCTX.pdfInfo!.pdfDoc!;
+            const pdf = pdfCTX.pdfDoc!;
             const page = pdf.getPage(index);
 
             const rotation = page.getRotation().angle >= 360 ? 0 : page.getRotation().angle;
@@ -19,20 +19,25 @@ export function useRotatePage() {
             page.setRotation(degrees(rotation + 180));
             pdf.insertPage(index, page);
     
-            const bytes = await pdf.save();
-            const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
-            
-            pdfCTX.setPDFInfo!({pdfDoc: pdf, pdfURL: URL.createObjectURL(pdfBlob)});
+            await pdf.save();
 
-            //Updates the PDFPages array (context.pdfPages)
-            const pdfArray = pdfCTX.pdfPages!;
-            const element = pdfArray![index];
+            pdfCTX.setPDFPages!(prev => {
+                const arr = [...prev];
+                const el = prev[index];
 
-            pdfArray?.filter((_el, i) => i !== index);
-            element.pdfCanvas!.style.rotate = (rotation + 180) + "deg";
-            pdfArray![index] = element;
+                const newObj = {
+                    ...el,
+                    pdfInfo: {
+                        ...el.pdfInfo,
+                        rotation: rotation + 180
+                    }
+                };
+                arr[index] = newObj;
+
+                return arr;
+            });
             
-            pdfCTX.setPDFPages!(pdfArray);
+            pdfCTX.setPDFDoc!(pdf);
         } catch (error) {
             errorCTX.setErrors!(prev => [...prev, "rotatePageError"]);
             console.error("An error occurred: ", error);

@@ -9,13 +9,25 @@ enum zoomEnum {
 export function useZoomPages() {
     const zoomCTX = useContext(zoomContext);
 
-    function zoomPages(zoom: "plus" | "minus") {
-        if(zoom === zoomEnum.plus) {
-            zoomCTX.setZoomLevel!(prev => prev + 0.1);
-        } else if(zoom === zoomEnum.minus) {
-            zoomCTX.setZoomLevel!(prev => prev - 0.1);
+    function zoomPages(zoom: "plus" | "minus"): void {
+        if(zoom === zoomEnum.plus && zoomCTX.zoomLevel! < 2) {
+            zoomCTX.setZoomLevel!(prev => Number((prev + 0.1).toFixed(2)));
+        } else if(zoom === zoomEnum.minus && zoomCTX.zoomLevel! > 0.2) {
+            zoomCTX.setZoomLevel!(prev => Number((prev - 0.1).toFixed(2)));
         };
     };
 
-    return { zoomPages }
+    function ctrlSZoom(e: WheelEvent): void {
+        if(e.ctrlKey) {
+            e.preventDefault();
+
+            if(e.deltaY < 0) {
+                zoomPages("plus");
+            } else {
+                zoomPages("minus");
+            };
+        };
+    };
+
+    return { zoomPages, ctrlSZoom }
 };
