@@ -21,23 +21,27 @@ export function MainPage() {
     const { ctrlSZoom } = useZoomPages();
 
     useEffect(() => {
-        const ref = divRef.current!;
+        if(divRef.current) {
+            const ref = divRef.current!;
 
-        ref.addEventListener("wheel", ctrlSZoom);
-        return () => ref.removeEventListener("wheel", ctrlSZoom);
+            ref.addEventListener("wheel", ctrlSZoom);
+            return () => ref.removeEventListener("wheel", ctrlSZoom);
+        }
     });
 
     return (
-        <div ref={divRef} className="grow-[1] flex justify-center items-center">
-            <div className="flex flex-col items-center justify-center grow-1">
-                {!pdfCTX.pdfDoc && <UploadButton handleFile={handleFile}/>}
-                {pdfCTX.pdfPages!.length > 0 && 
-                    <div className="flex">
-                        <RenderPages/>
-                        <Sidebar />
-                    </div>
-                }
-            </div>
-        </div>
+        <>
+            {!pdfCTX.pdfDoc && 
+                <div className="h-screen flex justify-center items-center">
+                    <UploadButton handleFile={handleFile}/>
+                </div>
+            }
+            {pdfCTX.pdfPages!.length > 0 &&
+                <div ref={divRef} className="flex justify-center items-start grow">
+                    <RenderPages/>
+                    <Sidebar/>
+                </div>
+            }
+        </>
     )
 };

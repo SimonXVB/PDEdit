@@ -4,7 +4,7 @@ export function NavbarButton({ children, title, onClick }: { children: ReactNode
     return (
         <button onClick={onClick} title={title} className="button">
             <span className="bg"></span>
-            <span className="front">{children}</span>
+            <span className="front font-semibold">{children}</span>
         </button>
     )
 };
