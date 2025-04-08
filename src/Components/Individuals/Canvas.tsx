@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import { zoomContext } from "../../Context/ZoomContext/zoomContext";
+import { useDrawOnCanvas } from "../../Hooks/useDrawOnCanvas";
 
 export interface PDFPageInterface{
     pdfImg: string, 
@@ -7,22 +8,32 @@ export interface PDFPageInterface{
     pdfInfo: { height: number, width: number, rotation: number }
 }
 
-export function Canvas({ element }: { element: PDFPageInterface }) {
-    const ref = useRef<HTMLDivElement>(null);
+export function Canvas({ el, index }: { el: PDFPageInterface, index: number }) {
     const zoomCTX = useContext(zoomContext);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const { draw, startDraw, stopDraw } = useDrawOnCanvas();
  
     useEffect(() => {
-        const canvas = element.pdfCanvas!;
+        const ctx = canvasRef.current?.getContext("2d");
 
-        ref.current!.innerHTML = "";
-        canvas.className = "pdfCanvasEl";
-        
-        canvas.height = Math.floor(element.pdfInfo.height * zoomCTX.zoomLevel!);
-        canvas.width = Math.floor(element.pdfInfo.width * zoomCTX.zoomLevel!);
-        canvas.style.rotate = element.pdfInfo.rotation + "deg";
+        canvasRef.current!.width = Math.floor(el.pdfInfo.width * zoomCTX.zoomLevel!);
+        canvasRef.current!.height = Math.floor(el.pdfInfo.height * zoomCTX.zoomLevel!);
 
-        ref.current!.appendChild(canvas);
-    }, [element.pdfCanvas, element.pdfInfo, element.pdfInfo.height, element.pdfInfo.rotation, element.pdfInfo.width, zoomCTX.zoomLevel]);
+        ctx?.clearRect(0, 0, el.pdfInfo.width, el.pdfInfo.height);
+        ctx?.scale(zoomCTX.zoomLevel!, zoomCTX.zoomLevel!);
+        ctx?.drawImage(el.pdfCanvas, 0, 0);
+    }, [el.pdfCanvas, el.pdfInfo.height, el.pdfInfo.width, zoomCTX.zoomLevel]);
 
-    return <div ref={ref} className="absolute top-0 left-0 z-10"></div>
+    return (
+        <canvas ref={canvasRef} className="absolute top-0 left-0 z-10" 
+            style={{
+                rotate: el.pdfInfo?.rotation + "deg"
+            }}
+            onMouseDown={startDraw}
+            onMouseUp={() => stopDraw(canvasRef.current!, index)}
+            onMouseLeave={() => stopDraw(canvasRef.current!, index)}
+            onMouseMove={e => draw(canvasRef.current!, e, index)}
+        ></canvas>
+    )
 };

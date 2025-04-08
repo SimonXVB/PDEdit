@@ -17,7 +17,7 @@ export function Sidebar() {
     };
 
     return (
-        <div className="flex flex-col h-full sticky top-4 max-h-[85vh] overflow-y-auto rounded-2xl mx-6 border-2 border-[#A294F9]">
+        <div className="flex flex-col h-full sticky top-4 max-h-[85vh] overflow-y-auto rounded-2xl mx-6 border-2 border-[#A294F9] z-20">
             {pdfCTX.pdfPages?.map((el, i) => (
                 <div key={i} className="flex flex-col justify-center m-2">
                     <div className="relative">

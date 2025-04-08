@@ -33,14 +33,12 @@ export function useLoadPDF() {
                 };
                 
                 await page.render(renderContext).promise;
-
-                const pdfCanvas = document.createElement("canvas");
-                pdfCanvas.width = viewport.width;
-                pdfCanvas.height = viewport.height;
+                const img = canvas.toDataURL("image/png");
+                canvas.getContext("2d")?.clearRect(0, 0, viewport.width, viewport.height);
 
                 const pdfPage = {
-                    pdfImg: canvas.toDataURL("image/png"),
-                    pdfCanvas: pdfCanvas,
+                    pdfImg: img,
+                    pdfCanvas: canvas,
                     pdfInfo: {
                         height: viewport.height,
                         width: viewport.width,

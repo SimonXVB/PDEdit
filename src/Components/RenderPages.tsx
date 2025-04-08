@@ -16,7 +16,7 @@ export function RenderPages() {
                         height: Math.floor(el.pdfInfo!.height * zoomCTX.zoomLevel!),
                         rotate: el.pdfInfo?.rotation + "deg"
                     }}/>
-                    <Canvas element={el}/>
+                    <Canvas el={el} index={i}/>
                 </div>
             ))}
         </div>

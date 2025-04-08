@@ -11,10 +11,11 @@ export type PDFPagesType = {
 export function PDFContextProvider({ children }: { children: React.ReactNode }) {
     const [pdfDoc, setPDFDoc] = useState<PDFDocument>();
     const [pdfPages, setPDFPages] = useState<PDFPagesType>([]);
-    const [pdfLoading, setPDFLoading] = useState<boolean>(false);
+
+    console.log(pdfPages);
 
     return (
-        <pdfContext.Provider value={{ pdfDoc, setPDFDoc, pdfPages, setPDFPages, pdfLoading, setPDFLoading }}>
+        <pdfContext.Provider value={{ pdfDoc, setPDFDoc, pdfPages, setPDFPages }}>
             {children}
         </pdfContext.Provider>
     )
