@@ -46,12 +46,12 @@ export function useLoadPDF() {
                     }
                 };
 
-                pdfCTX.setPDFPages!(prev => [...prev, pdfPage]);
+                pdfCTX.setPDFPages(prev => [...prev, pdfPage]);
             };
         } catch (error) {
-            errorCTX.setErrors!(prev => [...prev, "setURLError"]);
+            errorCTX.setErrors(prev => [...prev, "setURLError"]);
             console.error("An error occurred: ", error);
-        }
+        };
     };
 
     return { loadPDF };

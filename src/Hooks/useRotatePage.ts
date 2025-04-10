@@ -21,7 +21,7 @@ export function useRotatePage() {
     
             await pdf.save();
 
-            pdfCTX.setPDFPages!(prev => {
+            pdfCTX.setPDFPages(prev => {
                 const arr = [...prev];
                 const el = prev[index];
 
@@ -37,11 +37,11 @@ export function useRotatePage() {
                 return arr;
             });
             
-            pdfCTX.setPDFDoc!(pdf);
+            pdfCTX.setPDFDoc(pdf);
         } catch (error) {
-            errorCTX.setErrors!(prev => [...prev, "rotatePageError"]);
+            errorCTX.setErrors(prev => [...prev, "rotatePageError"]);
             console.error("An error occurred: ", error);
-        }
+        };
     };
 
     return { rotatePage }

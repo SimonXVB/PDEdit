@@ -73,3 +73,10 @@
     outline: none;
 }
 /*3D Button*/
+
+/*Draw Slider*/
+#draw-slider {
+    writing-mode: vertical-rl;
+    direction: rtl;
+}
+/*Draw Slider*/

@@ -12,7 +12,7 @@ export function useLoadInitialPDF() {
 
     function loadInitialPDF(input: File): void {
         if(input.type !== "application/pdf") {
-            errorCTX.setErrors!(prev => [...prev, "fileTypeError"]);
+            errorCTX.setErrors(prev => [...prev, "fileTypeError"]);
             return;
         };
 
@@ -25,15 +25,15 @@ export function useLoadInitialPDF() {
                     const pdf = await PDFDocument.load(reader.result);
                     const bytes = await pdf.save();
                     const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
-                    pdfCTX.setPDFDoc!(pdf);
+                    pdfCTX.setPDFDoc(pdf);
 
                     loadPDF(URL.createObjectURL(pdfBlob));
                 };
             };
         } catch (error) {
-            errorCTX.setErrors!(prev => [...prev, "setURLError"]);
+            errorCTX.setErrors(prev => [...prev, "setURLError"]);
             console.error("An error occurred: ", error);
-        }
+        };
     };
 
     return { loadInitialPDF };

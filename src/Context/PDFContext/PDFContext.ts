@@ -3,12 +3,10 @@ import { PDFPagesType } from "./PDFContextProvider";
 import { PDFDocument } from "pdf-lib";
  
 interface PDFInterface {
-    pdfDoc?: PDFDocument,
-    setPDFDoc?: Dispatch<SetStateAction<PDFDocument | undefined>>
-    pdfPages?: PDFPagesType,
-    setPDFPages?: Dispatch<SetStateAction<PDFPagesType>>,
-    pdfLoading?: boolean,
-    setPDFLoading?: Dispatch<SetStateAction<boolean>>
+    pdfDoc: PDFDocument | undefined,
+    setPDFDoc: Dispatch<SetStateAction<PDFDocument | undefined>>
+    pdfPages: PDFPagesType,
+    setPDFPages: Dispatch<SetStateAction<PDFPagesType>>
 };
 
-export const pdfContext = createContext<PDFInterface>({});
+export const pdfContext = createContext<PDFInterface>({} as PDFInterface);

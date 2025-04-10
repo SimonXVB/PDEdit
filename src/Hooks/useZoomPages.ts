@@ -10,14 +10,14 @@ export function useZoomPages() {
     const zoomCTX = useContext(zoomContext);
 
     function zoomPages(zoom: "plus" | "minus"): void {
-        if(zoom === zoomEnum.plus && zoomCTX.zoomLevel! < 2) {
-            zoomCTX.setZoomLevel!(prev => Number((prev + 0.1).toFixed(2)));
-        } else if(zoom === zoomEnum.minus && zoomCTX.zoomLevel! > 0.2) {
-            zoomCTX.setZoomLevel!(prev => Number((prev - 0.1).toFixed(2)));
+        if(zoom === zoomEnum.plus && zoomCTX.zoomLevel < 2) {
+            zoomCTX.setZoomLevel(prev => Number((prev + 0.1).toFixed(2)));
+        } else if(zoom === zoomEnum.minus && zoomCTX.zoomLevel > 0.2) {
+            zoomCTX.setZoomLevel(prev => Number((prev - 0.1).toFixed(2)));
         };
     };
 
-    function ctrlSZoom(e: WheelEvent): void {
+    function ctrlWheelZoom(e: WheelEvent): void {
         if(e.ctrlKey) {
             e.preventDefault();
 
@@ -29,5 +29,5 @@ export function useZoomPages() {
         };
     };
 
-    return { zoomPages, ctrlSZoom }
+    return { zoomPages, ctrlWheelZoom }
 };

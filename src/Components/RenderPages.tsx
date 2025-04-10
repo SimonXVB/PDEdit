@@ -9,14 +9,14 @@ export function RenderPages() {
     
     return (
         <div className="flex flex-col w-full overflow-x-auto ml-4">
-            {pdfCTX.pdfPages!.map((el, i) => (
-                <div className="relative mx-auto mb-4 border-2 border-[#A294F9] box-content" style={{width: Math.floor(el.pdfInfo!.width * zoomCTX.zoomLevel!)}} key={i}>
+            {pdfCTX.pdfPages.map((el, i) => (
+                <div className="relative mx-auto mb-4 border-2 border-[#A294F9] box-content" style={{width: Math.floor(el.pdfInfo.width * zoomCTX.zoomLevel)}} key={i}>
                     <img src={el.pdfImg} style={{
-                        width: Math.floor(el.pdfInfo!.width * zoomCTX.zoomLevel!),
-                        height: Math.floor(el.pdfInfo!.height * zoomCTX.zoomLevel!),
+                        width: Math.floor(el.pdfInfo.width * zoomCTX.zoomLevel),
+                        height: Math.floor(el.pdfInfo.height * zoomCTX.zoomLevel),
                         rotate: el.pdfInfo?.rotation + "deg"
                     }}/>
-                    <Canvas el={el} index={i}/>
+                    <Canvas page={el} index={i}/>
                 </div>
             ))}
         </div>

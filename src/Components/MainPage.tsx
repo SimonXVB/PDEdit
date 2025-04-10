@@ -8,7 +8,9 @@ import { useZoomPages } from "../Hooks/useZoomPages";
 
 export function MainPage() {
     const pdfCTX = useContext(pdfContext);
+
     const { loadInitialPDF } = useLoadInitialPDF();
+    const { ctrlWheelZoom } = useZoomPages();
 
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -18,14 +20,12 @@ export function MainPage() {
         };
     };
 
-    const { ctrlSZoom } = useZoomPages();
-
     useEffect(() => {
         if(divRef.current) {
             const ref = divRef.current!;
 
-            ref.addEventListener("wheel", ctrlSZoom);
-            return () => ref.removeEventListener("wheel", ctrlSZoom);
+            ref.addEventListener("wheel", ctrlWheelZoom);
+            return () => ref.removeEventListener("wheel", ctrlWheelZoom);
         }
     });
 
@@ -36,7 +36,7 @@ export function MainPage() {
                     <UploadButton handleFile={handleFile}/>
                 </div>
             }
-            {pdfCTX.pdfPages!.length > 0 &&
+            {pdfCTX.pdfPages.length > 0 &&
                 <div ref={divRef} className="flex justify-center items-start grow">
                     <RenderPages/>
                     <Sidebar/>

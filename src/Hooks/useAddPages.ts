@@ -12,7 +12,7 @@ export function useAddPages() {
     
     async function addPages(input: File): Promise<void> {
         if(input.type !== "application/pdf") {
-            errorCTX.setErrors!(prev => [...prev, "fileTypeError"]);
+            errorCTX.setErrors(prev => [...prev, "fileTypeError"]);
             return;
         };
 
@@ -23,11 +23,11 @@ export function useAddPages() {
     
             reader.onload = async () => {
                 if(typeof reader.result === "string") {
-                    const docA = pdfCTX.pdfDoc;
+                    const docA = pdfCTX.pdfDoc!;
                     const docB = await PDFDocument.load(reader.result);
     
                     //Merges two PDF docs into one
-                    const copiedPagesA = await mergedPdf.copyPages(docA!, docA!.getPageIndices());
+                    const copiedPagesA = await mergedPdf.copyPages(docA, docA.getPageIndices());
                     copiedPagesA.forEach((page) => mergedPdf.addPage(page));
     
                     const copiedPagesB = await mergedPdf.copyPages(docB, docB.getPageIndices());
@@ -35,7 +35,7 @@ export function useAddPages() {
     
                     //Saves and sets merged PDF
                     await mergedPdf.save();
-                    pdfCTX.setPDFDoc!(mergedPdf);
+                    pdfCTX.setPDFDoc(mergedPdf);
 
                     //Turns added newly added PDF docs into URL and loads them
                     const bytes = await docB.save();
@@ -45,9 +45,9 @@ export function useAddPages() {
                 };
             };
         } catch (error) {
-            errorCTX.setErrors!(prev => [...prev, "addPageError"]);
+            errorCTX.setErrors(prev => [...prev, "addPageError"]);
             console.error("An error occurred: ", error);
-        }
+        };
     };
 
     return { addPages };

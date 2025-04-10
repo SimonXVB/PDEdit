@@ -13,14 +13,14 @@ export function useRemovePage() {
             // Updates the actual PDF file
             pdf.removePage(index);
             await pdf.save();
-            pdfCTX.setPDFDoc!(pdf);
+            pdfCTX.setPDFDoc(pdf);
 
             //Updates the PDFPages array (context.pdfPages)
-            pdfCTX.setPDFPages!(prev => prev.filter((_el, i) => i !== index));
+            pdfCTX.setPDFPages(prev => prev.filter((_el, i) => i !== index));
         } catch (error) {
-            errorCTX.setErrors!(prev => [...prev, "removePageError"]);
+            errorCTX.setErrors(prev => [...prev, "removePageError"]);
             console.error("An error occurred: ", error);
-        }
+        };
     };
 
     return { removePage };

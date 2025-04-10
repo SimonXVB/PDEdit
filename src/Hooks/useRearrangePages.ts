@@ -21,11 +21,10 @@ export function useRearrangePages() {
     
             await pdf.save();
 
-            pdfCTX.setPDFDoc!(pdf);
+            pdfCTX.setPDFDoc(pdf);
 
             //Updates the PDFPages array (context.pdfPages)
-
-            pdfCTX.setPDFPages!(prev => {
+            pdfCTX.setPDFPages(prev => {
                 const pdfArray = [...prev];
 
                 const el = pdfArray[rearrangePage];
@@ -35,9 +34,9 @@ export function useRearrangePages() {
                 return pdfArray;
             });
         } catch (error) {
-            errorCTX.setErrors!(prev => [...prev, "rearrangePageError"]);
+            errorCTX.setErrors(prev => [...prev, "rearrangePageError"]);
             console.error("An error occurred: ", error);
-        }
+        };
     };
 
     return { rearrangePages };
