@@ -19,17 +19,15 @@ export function Canvas({ page, index }: { page: PDFPageInterface, index: number 
 
         canvasRef.current!.width = Math.floor(page.pdfInfo.width * zoomCTX.zoomLevel);
         canvasRef.current!.height = Math.floor(page.pdfInfo.height * zoomCTX.zoomLevel);
+        canvasRef.current!.style.rotate = page.pdfInfo.rotation + "deg";
 
         ctx?.clearRect(0, 0, page.pdfInfo.width, page.pdfInfo.height);
         ctx?.scale(zoomCTX.zoomLevel, zoomCTX.zoomLevel);
         ctx?.drawImage(page.pdfCanvas, 0, 0);
-    }, [page.pdfCanvas, page.pdfInfo.height, page.pdfInfo.width, zoomCTX.zoomLevel]);
+    }, [page.pdfCanvas, page.pdfInfo.height, page.pdfInfo.rotation, page.pdfInfo.width, zoomCTX.zoomLevel]);
 
     return (
-        <canvas ref={canvasRef} className="absolute top-0 left-0" 
-            style={{
-                rotate: page.pdfInfo?.rotation + "deg"
-            }}
+        <canvas ref={canvasRef} className="absolute top-0 left-0"
             onMouseDown={startDraw}
             onMouseUp={() => stopDraw(canvasRef.current!, index)}
             onMouseLeave={() => stopDraw(canvasRef.current!, index)}

@@ -4,12 +4,12 @@ import { drawingContext, DrawingOptionsInterface } from "./drawingContext";
 export function DrawingContextProvider({ children }: { children: React.ReactNode })  {
     const [drawingOptions, setDrawingOptions] = useState<DrawingOptionsInterface>({
         drawingEnabled: false,
-        lineWidth: 1,
+        lineWidth: 25,
         color: ""
     });
 
     return (
-        <drawingContext.Provider value={{drawingOptions, setDrawingOptions}}>
+        <drawingContext.Provider value={{ drawingOptions, setDrawingOptions }}>
             {children}
         </drawingContext.Provider>
     )

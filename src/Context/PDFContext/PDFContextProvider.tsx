@@ -1,12 +1,6 @@
 import { useState } from "react"
-import { pdfContext } from "./pdfContext";
+import { pdfContext, PDFPagesType } from "./pdfContext";
 import { PDFDocument } from "pdf-lib";
-
-export type PDFPagesType = { 
-    pdfImg: string, 
-    pdfCanvas: HTMLCanvasElement,
-    pdfInfo: { height: number, width: number, rotation: number }
-}[];
 
 export function PDFContextProvider({ children }: { children: React.ReactNode }) {
     const [pdfDoc, setPDFDoc] = useState<PDFDocument>();

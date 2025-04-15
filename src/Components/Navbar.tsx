@@ -5,6 +5,7 @@ import { NavbarButton } from "./Individuals/3DButton";
 import { pdfContext } from "../Context/PDFContext/pdfContext";
 import { zoomContext } from "../Context/ZoomContext/zoomContext";
 import { DrawModal } from "./Drawing Comps/DrawModal";
+import { TextModal } from "./Text Comps/TextModal";
 
 export function Navbar() {
     const { addPages } = useAddPages();
@@ -16,15 +17,15 @@ export function Navbar() {
     const [modal, setModal] = useState<string>("");
 
     const inputButtonRef = useRef<HTMLInputElement>(null);
- 
+
+    function clickInput() {
+        inputButtonRef.current?.click();
+    };
+
     function handleAddPage(e: React.ChangeEvent<HTMLInputElement>): void {
         if(e.target.files) {
             addPages(e.target.files[0]);
         };
-    };
-
-    function clickInput() {
-        inputButtonRef.current?.click();
     };
 
     return (
@@ -40,6 +41,10 @@ export function Navbar() {
                         <div className="relative flex justify-center">
                             <NavbarButton onClick={() => setModal(modal === "draw" ? "" : "draw")} title={"Draw"}>Draw</NavbarButton>
                             {modal === "draw" && <DrawModal/>}
+                        </div>
+                        <div className="relative flex justify-center">
+                            <NavbarButton onClick={() => setModal(modal === "text" ? "" : "text")} title={"Text"}>Text</NavbarButton>
+                            {modal === "text" && <TextModal/>}
                         </div>
                         <NavbarButton title={"Add PDF"} onClick={clickInput}>
                             <input ref={inputButtonRef} type="file" onChange={handleAddPage} className="absolute h-full top-0 left-0 w-full hidden"/>

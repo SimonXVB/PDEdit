@@ -1,6 +1,12 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { PDFPagesType } from "./PDFContextProvider";
 import { PDFDocument } from "pdf-lib";
+
+export type PDFPagesType = {
+    pdfID: string,
+    pdfImg: string,
+    pdfCanvas: HTMLCanvasElement,
+    pdfInfo: { height: number, width: number, rotation: number }
+}[];
  
 interface PDFInterface {
     pdfDoc: PDFDocument | undefined,
