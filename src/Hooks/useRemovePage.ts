@@ -6,16 +6,14 @@ export function useRemovePage() {
     const pdfCTX = useContext(pdfContext);
     const errorCTX = useContext(errorContext);
 
-    async function removePage(index: number): Promise<void> {
+    async function removePage(index: number) {
         try {
             const pdf = pdfCTX.pdfDoc!;
 
-            // Updates the actual PDF file
             pdf.removePage(index);
             await pdf.save();
             pdfCTX.setPDFDoc(pdf);
 
-            //Updates the PDFPages array (context.pdfPages)
             pdfCTX.setPDFPages(prev => prev.filter((_el, i) => i !== index));
         } catch (error) {
             errorCTX.setErrors(prev => [...prev, "removePageError"]);

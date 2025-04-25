@@ -4,12 +4,12 @@ import { zoomContext } from "../Context/ZoomContext/zoomContext";
 enum zoomEnum {
     plus = "plus",
     minus = "minus"
-}
+};
 
 export function useZoomPages() {
     const zoomCTX = useContext(zoomContext);
 
-    function zoomPages(zoom: "plus" | "minus"): void {
+    function zoomPages(zoom: "plus" | "minus") {
         if(zoom === zoomEnum.plus && zoomCTX.zoomLevel < 2) {
             zoomCTX.setZoomLevel(prev => Number((prev + 0.1).toFixed(2)));
         } else if(zoom === zoomEnum.minus && zoomCTX.zoomLevel > 0.2) {
@@ -17,7 +17,7 @@ export function useZoomPages() {
         };
     };
 
-    function ctrlWheelZoom(e: WheelEvent): void {
+    function ctrlWheelZoom(e: WheelEvent) {
         if(e.ctrlKey) {
             e.preventDefault();
 

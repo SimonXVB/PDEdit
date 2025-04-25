@@ -10,7 +10,7 @@ export function useAddPages() {
 
     const { loadPDF } = useLoadPDF();
     
-    async function addPages(input: File): Promise<void> {
+    async function addPages(input: File) {
         if(input.type !== "application/pdf") {
             errorCTX.setErrors(prev => [...prev, "fileTypeError"]);
             return;
@@ -26,18 +26,15 @@ export function useAddPages() {
                     const docA = pdfCTX.pdfDoc!;
                     const docB = await PDFDocument.load(reader.result);
     
-                    //Merges two PDF docs into one
                     const copiedPagesA = await mergedPdf.copyPages(docA, docA.getPageIndices());
                     copiedPagesA.forEach((page) => mergedPdf.addPage(page));
     
                     const copiedPagesB = await mergedPdf.copyPages(docB, docB.getPageIndices());
                     copiedPagesB.forEach((page) => mergedPdf.addPage(page));
     
-                    //Saves and sets merged PDF
                     await mergedPdf.save();
                     pdfCTX.setPDFDoc(mergedPdf);
 
-                    //Turns added newly added PDF docs into URL and loads them
                     const bytes = await docB.save();
                     const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
 

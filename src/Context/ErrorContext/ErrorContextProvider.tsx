@@ -8,5 +8,5 @@ export function ErrorContextProvider({ children }: { children: React.ReactNode }
         <errorContext.Provider value={{ errors, setErrors }}>
             {children}
         </errorContext.Provider>
-    )
+    );
 };

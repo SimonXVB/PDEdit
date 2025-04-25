@@ -8,7 +8,7 @@ export function useLoadPDF() {
     const pdfCTX = useContext(pdfContext);
     const errorCTX = useContext(errorContext);
 
-    async function loadPDF(url: string): Promise<void> {
+    async function loadPDF(url: string) {
         GlobalWorkerOptions.workerSrc = new URL(
             'pdfjs-dist/build/pdf.worker.min.mjs',
             import.meta.url
@@ -35,16 +35,14 @@ export function useLoadPDF() {
                 
                 await page.render(renderContext).promise;
                 const img = canvas.toDataURL("image/png");
-                canvas.getContext("2d")?.clearRect(0, 0, viewport.width, viewport.height);
 
                 const pdfPage = {
                     pdfID: uuidv4(),
                     pdfImg: img,
-                    pdfCanvas: canvas,
                     pdfInfo: {
                         height: viewport.height,
                         width: viewport.width,
-                        rotation: 0
+                        rotation: 360
                     }
                 };
 

@@ -7,14 +7,13 @@ export function useRotatePage() {
     const pdfCTX = useContext(pdfContext);
     const errorCTX = useContext(errorContext);
 
-    async function rotatePage(index: number): Promise<void> {
+    async function rotatePage(index: number) {
         try {
             const pdf = pdfCTX.pdfDoc!;
             const page = pdf.getPage(index);
 
             const rotation = page.getRotation().angle >= 360 ? 0 : page.getRotation().angle;
     
-            // Updates the actual PDF file
             pdf.removePage(index);
             page.setRotation(degrees(rotation + 180));
             pdf.insertPage(index, page);
@@ -23,16 +22,8 @@ export function useRotatePage() {
 
             pdfCTX.setPDFPages(prev => {
                 const arr = [...prev];
-                const el = prev[index];
-
-                const newObj = {
-                    ...el,
-                    pdfInfo: {
-                        ...el.pdfInfo,
-                        rotation: rotation + 180
-                    }
-                };
-                arr[index] = newObj;
+                
+                arr[index].pdfInfo.rotation = rotation + 180;
 
                 return arr;
             });

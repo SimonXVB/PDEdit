@@ -7,12 +7,11 @@ export function useRearrangePages() {
     const pdfCTX = useContext(pdfContext);
     const errorCTX = useContext(errorContext);
 
-    async function rearrangePages(currentPage: number, rearrangePage: number): Promise<void> {
+    async function rearrangePages(currentPage: number, rearrangePage: number) {
         try {
             const pdf = pdfCTX.pdfDoc!;
             const pdfPages: PDFPage[] = pdf.getPages();
     
-            // Updates the actual PDF file
             pdf.removePage(currentPage);
             pdf.insertPage(currentPage, pdfPages[rearrangePage]);
             
@@ -20,10 +19,8 @@ export function useRearrangePages() {
             pdf.insertPage(rearrangePage, pdfPages[currentPage]);
     
             await pdf.save();
-
             pdfCTX.setPDFDoc(pdf);
 
-            //Updates the PDFPages array (context.pdfPages)
             pdfCTX.setPDFPages(prev => {
                 const pdfArray = [...prev];
 

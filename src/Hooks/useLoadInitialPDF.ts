@@ -10,7 +10,7 @@ export function useLoadInitialPDF() {
     
     const { loadPDF } = useLoadPDF();
 
-    function loadInitialPDF(input: File): void {
+    function loadInitialPDF(input: File) {
         if(input.type !== "application/pdf") {
             errorCTX.setErrors(prev => [...prev, "fileTypeError"]);
             return;

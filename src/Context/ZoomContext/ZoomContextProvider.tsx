@@ -8,5 +8,5 @@ export function ZoomContextProvider({ children }: { children: React.ReactNode })
         <zoomContext.Provider value={{ zoomLevel, setZoomLevel }}>
             {children}
         </zoomContext.Provider>
-    )
+    );
 };
