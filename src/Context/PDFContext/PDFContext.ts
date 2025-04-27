@@ -5,13 +5,13 @@ export type PDFPagesType = {
     pdfID: string,
     pdfImg: string,
     pdfInfo: { height: number, width: number, rotation: number }
-}[];
+};
  
 interface PDFInterface {
     pdfDoc: PDFDocument | undefined,
     setPDFDoc: Dispatch<SetStateAction<PDFDocument | undefined>>
-    pdfPages: PDFPagesType,
-    setPDFPages: Dispatch<SetStateAction<PDFPagesType>>
+    pdfPages: PDFPagesType[],
+    setPDFPages: Dispatch<SetStateAction<PDFPagesType[]>>
 };
 
 export const pdfContext = createContext<PDFInterface>({} as PDFInterface);

@@ -72,3 +72,15 @@
     outline: none;
 }
 /*3D Button*/
+
+
+/*Sidebar*/
+#sidebarContainer {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#scrsidebarContainer::-webkit-scrollbar {
+    display: none;
+}
+/*Sidebar*/

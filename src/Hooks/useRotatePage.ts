@@ -15,7 +15,7 @@ export function useRotatePage() {
             const rotation = page.getRotation().angle >= 360 ? 0 : page.getRotation().angle;
     
             pdf.removePage(index);
-            page.setRotation(degrees(rotation + 180));
+            page.setRotation(degrees(rotation + 90));
             pdf.insertPage(index, page);
     
             await pdf.save();
@@ -23,7 +23,7 @@ export function useRotatePage() {
             pdfCTX.setPDFPages(prev => {
                 const arr = [...prev];
                 
-                arr[index].pdfInfo.rotation = rotation + 180;
+                arr[index].pdfInfo.rotation = rotation + 90;
 
                 return arr;
             });

@@ -37,7 +37,7 @@ export function MainPage() {
                 </div>
             }
             {pdfCTX.pdfDoc &&
-                <div ref={divRef}>
+                <div ref={divRef} className="min-h-screen h-full">
                     <Navbar/>
                     <div className="flex w-full">
                         <RenderPages/>
