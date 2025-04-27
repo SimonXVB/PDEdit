@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import { useAddPages } from "../Hooks/useAddPages";
 import { useZoomPages } from "../Hooks/useZoomPages";
-import { NavbarButton } from "./Individuals/3DButton";
+import { NavbarButton } from "./Individuals/NavbarButton";
 import { zoomContext } from "../Context/ZoomContext/zoomContext";
 
 export function Navbar() {
@@ -11,7 +11,7 @@ export function Navbar() {
     const zoomCTX = useContext(zoomContext);
     const inputButtonRef = useRef<HTMLInputElement>(null);
 
-    function handleAddPage(e: React.ChangeEvent<HTMLInputElement>): void {
+    function handleAddPage(e: React.ChangeEvent<HTMLInputElement>) {
         if(e.target.files) {
             addPages(e.target.files[0]);
         };
@@ -19,10 +19,10 @@ export function Navbar() {
 
     return (
         <div className="flex justify-center sticky top-0 z-20 w-screen">
-            <nav className="flex gap-4 p-3 my-4 rounded-4xl bg-white border-4 border-[#A294F9]">
+            <nav className="flex gap-4 p-3 my-4 rounded-xl bg-white border-4 border-cyan-500">
                 <div className="flex items-center">
                     <NavbarButton title={"Zoom In"} onClick={() => zoomPages("plus")}>Zoom In</NavbarButton>
-                    <p className="font-semibold px-3 py-1 rounded-3xl mx-2 bg-[#A194F994]" title="Zoom Level">{Math.floor(zoomCTX.zoomLevel * 100)}%</p>
+                    <p className="font-semibold rounded-xl text-cyan-700 mx-2" title="Zoom Level">{Math.floor(zoomCTX.zoomLevel * 100)}%</p>
                     <NavbarButton title={"Zoom Out"} onClick={() => zoomPages("minus")}>Zoom Out</NavbarButton>
                 </div>
                 <NavbarButton title={"Add PDF"} onClick={() => inputButtonRef.current!.click()}>

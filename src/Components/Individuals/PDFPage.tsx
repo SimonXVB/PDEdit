@@ -35,7 +35,7 @@ export function PDFPage({ el }: { el: PDFPagesType }) {
     }, [el.pdfImg, el.pdfInfo.height, el.pdfInfo.rotation, el.pdfInfo.width, zoomCTX.zoomLevel]);
 
     return (
-        <div className="mx-auto mb-4 border-2 box-content border-[#A294F9]" id={el.pdfID}>
+        <div className="mx-auto mb-4 shadow-xl shadow-gray-400" id={el.pdfID}>
             <canvas ref={canvasRef}></canvas>
         </div>
     )

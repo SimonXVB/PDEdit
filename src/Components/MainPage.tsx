@@ -14,7 +14,7 @@ export function MainPage() {
     const { loadInitialPDF } = useLoadInitialPDF();
     const { ctrlWheelZoom } = useZoomPages();
 
-    function handleFile(e: React.ChangeEvent<HTMLInputElement>): void {
+    function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
         if(e.target.files) {
             loadInitialPDF(e.target.files[0]);
         };
@@ -39,7 +39,7 @@ export function MainPage() {
             {pdfCTX.pdfDoc &&
                 <div ref={divRef} className="min-h-screen h-full">
                     <Navbar/>
-                    <div className="flex w-full">
+                    <div className="flex">
                         <RenderPages/>
                         <Sidebar/>
                     </div>
