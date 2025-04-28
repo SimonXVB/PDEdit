@@ -16,7 +16,7 @@ export function useRemovePage() {
 
             pdfCTX.setPDFPages(prev => prev.filter((_el, i) => i !== index));
         } catch (error) {
-            errorCTX.setErrors(prev => [...prev, "removePageError"]);
+            errorCTX.setError("removePageError");
             console.error("An error occurred: ", error);
         };
     };

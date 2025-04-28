@@ -49,7 +49,7 @@ export function useLoadPDF() {
                 pdfCTX.setPDFPages(prev => [...prev, pdfPage]);
             };
         } catch (error) {
-            errorCTX.setErrors(prev => [...prev, "setURLError"]);
+            errorCTX.setError("setURLError");
             console.error("An error occurred: ", error);
         };
     };

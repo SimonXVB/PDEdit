@@ -12,7 +12,7 @@ export function useAddPages() {
     
     async function addPages(input: File) {
         if(input.type !== "application/pdf") {
-            errorCTX.setErrors(prev => [...prev, "fileTypeError"]);
+            errorCTX.setError("fileTypeError");
             return;
         };
 
@@ -42,7 +42,7 @@ export function useAddPages() {
                 };
             };
         } catch (error) {
-            errorCTX.setErrors(prev => [...prev, "addPageError"]);
+            errorCTX.setError("addPageError");
             console.error("An error occurred: ", error);
         };
     };

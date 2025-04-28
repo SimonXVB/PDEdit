@@ -1,19 +1,32 @@
 @import "tailwindcss";
 
-/*Loading Spinner*/
-#loading-spinner {
-    animation: spin 2s infinite;
+/*Error Popup Animations*/
+.in {
+    animation: slide-in .75s ease forwards;
 }
 
-@keyframes spin {
+.out {
+    animation: slide-out .75s ease forwards;
+}
+
+@keyframes slide-in {
     from {
-        transform: rotate(0deg);
-    }
+        left: -100%;
+    } 
     to {
-        transform: rotate(360deg);
+        left: 0;
     }
 }
-/*Loading Spinner*/
+
+@keyframes slide-out {
+    from {
+        left: 0;
+    } 
+    to {
+        left: -100%;
+    }
+}
+/*Error Popup Animations*/
 
 /*Sidebar*/
 #sidebarContainer {

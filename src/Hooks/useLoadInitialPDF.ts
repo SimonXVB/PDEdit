@@ -12,7 +12,7 @@ export function useLoadInitialPDF() {
 
     function loadInitialPDF(input: File) {
         if(input.type !== "application/pdf") {
-            errorCTX.setErrors(prev => [...prev, "fileTypeError"]);
+            errorCTX.setError("fileTypeError");
             return;
         };
 
@@ -31,7 +31,7 @@ export function useLoadInitialPDF() {
                 };
             };
         } catch (error) {
-            errorCTX.setErrors(prev => [...prev, "setURLError"]);
+            errorCTX.setError("setURLError");
             console.error("An error occurred: ", error);
         };
     };

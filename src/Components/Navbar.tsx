@@ -18,7 +18,7 @@ export function Navbar() {
     };
 
     return (
-        <div className="flex justify-center sticky top-0 z-20 w-screen">
+        <div className="flex justify-center sticky top-0 z-20">
             <nav className="flex gap-4 p-3 my-4 rounded-xl bg-white border-4 border-cyan-500">
                 <div className="flex items-center">
                     <NavbarButton title={"Zoom In"} onClick={() => zoomPages("plus")}>Zoom In</NavbarButton>

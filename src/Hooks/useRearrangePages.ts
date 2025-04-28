@@ -31,7 +31,7 @@ export function useRearrangePages() {
                 return pdfArray;
             });
         } catch (error) {
-            errorCTX.setErrors(prev => [...prev, "rearrangePageError"]);
+            errorCTX.setError("rearrangePageError");
             console.error("An error occurred: ", error);
         };
     };

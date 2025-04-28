@@ -42,29 +42,31 @@ export function SidebarPage({ el, i, draggingId, setDraggingId }: SideBarInterfa
     useEffect(() => {
         const rotation = el.pdfInfo.rotation;
         const ctx = canvasRef.current!.getContext("2d");
-
         const img = new Image();
-        img.src = el.pdfImg;
 
-        if(rotation === 90 || rotation === 270) {
-            canvasRef.current!.height = (el.pdfInfo.width * 0.1);
-            canvasRef.current!.width = (el.pdfInfo.height * 0.1);
-
-            ctx!.save()
-            ctx!.scale(0.1, 0.1);
-            ctx!.translate(el.pdfInfo.height / 2, el.pdfInfo.width / 2);
-        } else {
-            canvasRef.current!.height = (el.pdfInfo.height * 0.1);
-            canvasRef.current!.width = (el.pdfInfo.width * 0.1);
-
-            ctx!.save();
-            ctx!.scale(0.1, 0.1);
-            ctx!.translate(el.pdfInfo.width / 2, el.pdfInfo.height / 2);
+        img.onload = () => {
+            if(rotation === 90 || rotation === 270) {
+                canvasRef.current!.height = (el.pdfInfo.width * 0.1);
+                canvasRef.current!.width = (el.pdfInfo.height * 0.1);
+    
+                ctx!.save()
+                ctx!.scale(0.1, 0.1);
+                ctx!.translate(el.pdfInfo.height / 2, el.pdfInfo.width / 2);
+            } else {
+                canvasRef.current!.height = (el.pdfInfo.height * 0.1);
+                canvasRef.current!.width = (el.pdfInfo.width * 0.1);
+    
+                ctx!.save();
+                ctx!.scale(0.1, 0.1);
+                ctx!.translate(el.pdfInfo.width / 2, el.pdfInfo.height / 2);
+            };
+    
+            ctx!.rotate(el.pdfInfo.rotation * (Math.PI / 180));
+            ctx!.drawImage(img, -(el.pdfInfo.width / 2), -(el.pdfInfo.height / 2), el.pdfInfo.width, el.pdfInfo.height);
+            ctx!.restore();
         };
 
-        ctx!.rotate(el.pdfInfo.rotation * (Math.PI / 180));
-        ctx!.drawImage(img, -(el.pdfInfo.width / 2), -(el.pdfInfo.height / 2), el.pdfInfo.width, el.pdfInfo.height);
-        ctx!.restore();
+        img.src = el.pdfImg;
     }, [el.pdfImg, el.pdfInfo.height, el.pdfInfo.rotation, el.pdfInfo.width, zoomCTX.zoomLevel]);
 
 

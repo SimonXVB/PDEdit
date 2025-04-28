@@ -30,7 +30,7 @@ export function useRotatePage() {
             
             pdfCTX.setPDFDoc(pdf);
         } catch (error) {
-            errorCTX.setErrors(prev => [...prev, "rotatePageError"]);
+            errorCTX.setError("rotatePageError");
             console.error("An error occurred: ", error);
         };
     };
