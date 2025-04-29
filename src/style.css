@@ -1,14 +1,6 @@
 @import "tailwindcss";
 
 /*Error Popup Animations*/
-.in {
-    animation: slide-in .75s ease forwards;
-}
-
-.out {
-    animation: slide-out .75s ease forwards;
-}
-
 @keyframes slide-in {
     from {
         left: -100%;
@@ -28,7 +20,27 @@
 }
 /*Error Popup Animations*/
 
-/*Sidebar*/
+/*Sidebar Animations*/
+@keyframes in-sidebar {
+    from {
+        transform: translateX(85%)
+    }
+    to {
+        transform: translateX(0)
+    }
+}
+
+@keyframes out-sidebar {
+    from {
+        transform: translateX(0)
+    }
+    to {
+        transform: translateX(85%)
+    }
+}
+/*Sidebar Animations*/
+
+/*Sidebar Scrollbar*/
 #sidebarContainer {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -37,4 +49,14 @@
 #scrsidebarContainer::-webkit-scrollbar {
     display: none;
 }
-/*Sidebar*/
+/*Sidebar Scrollbar*/
+
+/*Navbar*/
+@media (max-width: 440px) {
+    #navbar {
+        width: 100%;
+        border-radius: 0;
+        border-inline: 0;
+    }
+}
+/*Navbar*/

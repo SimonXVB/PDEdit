@@ -6,7 +6,7 @@ export function PDFPageControls({ pageNum, index }: { pageNum: number, index: nu
     const { rotatePage } = useRotatePage();
 
     return (
-        <div className="flex justify-center mt-1">
+        <div className="flex justify-center mt-1 mb-2">
             <button onClick={() => rotatePage(index)} className="rounded-lg p-1 cursor-pointer hover:bg-cyan-500 hover:*:fill-white" title="Rotate Page">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#00b8db" viewBox="0 0 16 16">
                     <path fillRule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>

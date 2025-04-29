@@ -13,6 +13,7 @@ interface SideBarInterface {
 export function SidebarPage({ el, i, draggingId, setDraggingId }: SideBarInterface) {
     const zoomCTX = useContext(zoomContext);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    
     const { rearrangePages } = useRearrangePages();
     
     function handleDragOver(e: React.DragEvent<HTMLCanvasElement>) {

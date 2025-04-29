@@ -6,7 +6,7 @@ export function RenderPages() {
     const pdfCTX = useContext(pdfContext);
     
     return (
-        <div className="flex flex-col overflow-x-auto ml-4 w-full">
+        <div className="flex flex-col overflow-x-auto mx-2 w-full">
             {pdfCTX.pdfPages.map((el, i) => (
                 <PDFPage el={el} key={i}/>
             ))}

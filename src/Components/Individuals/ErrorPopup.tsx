@@ -13,17 +13,18 @@ export function ErrorPopup() {
         "setURLError": "Internal Error",
         "rearrangePageError": "Failed to rearrange pages.",
         "removePageError": "Failed to remove page.",
-        "rotatePageError": "Failed to rotate page."
+        "rotatePageError": "Failed to rotate page.",
+        "downloadPDFError": "Failed to download PDF."
     };
 
     useEffect(() => {
         clearTimeout(timeoutRef.current!);
 
         if(errorRef.current) {
-            errorRef.current.classList.toggle("in");
+            errorRef.current.style.animation = "slide-in .75s ease forwards";
 
             timeoutRef.current = setTimeout(() => {
-                errorRef.current!.classList.toggle("out");
+                errorRef.current!.style.animation = "slide-out .75s ease forwards";
 
                 errorRef.current!.onanimationend = () => {
                     errorCTX.setError("");
