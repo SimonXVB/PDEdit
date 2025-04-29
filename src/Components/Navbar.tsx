@@ -14,7 +14,9 @@ export function Navbar() {
     const inputButtonRef = useRef<HTMLInputElement>(null);
 
     function handleAddPage(e: React.ChangeEvent<HTMLInputElement>) {
-        addPages(e.target.files![0]);
+        if(e.target.files) {
+            addPages(e.target.files[0]);
+        };
     };
 
     return (
@@ -39,7 +41,7 @@ export function Navbar() {
                     </NavbarButton>
                 </div>
                 <NavbarButton title={"Add PDF"} onClick={() => inputButtonRef.current!.click()}>
-                    <input ref={inputButtonRef} type="file" onChange={handleAddPage} title="Add PDF" className="absolute h-full top-0 left-0 w-full opacity-0 cursor-pointer"/>
+                    <input ref={inputButtonRef} type="file" accept="application/pdf" onChange={handleAddPage} title="Add PDF" className="absolute h-full top-0 left-0 w-full opacity-0 cursor-pointer"/>
                     <p>Add PDF</p>
                 </NavbarButton>
             </nav>
