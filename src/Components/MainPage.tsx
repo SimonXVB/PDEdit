@@ -16,7 +16,6 @@ export function MainPage() {
 
     function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
         if(e.target.files) {
-            alert("handle")
             loadInitialPDF(e.target.files[0]);
         };
     };
