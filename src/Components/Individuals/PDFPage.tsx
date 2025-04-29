@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
-import { zoomContext } from "../../Context/ZoomContext/zoomContext";
-import { PDFPagesType } from "../../Context/PDFContext/pdfContext";
+import { zoomContext } from "../../Context/ZoomContext/zoomContext.ts";
+import { PDFPagesType } from "../../Context/PDFContext/pdfContext.ts";
 
 export function PDFPage({ el }: { el: PDFPagesType }) {
     const zoomCTX = useContext(zoomContext);

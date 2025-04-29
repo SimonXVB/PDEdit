@@ -7,7 +7,7 @@ export type PDFPagesType = {
     pdfInfo: { height: number, width: number, rotation: number }
 };
  
-interface PDFInterface {
+export interface PDFInterface {
     pdfDoc: PDFDocument | undefined,
     setPDFDoc: Dispatch<SetStateAction<PDFDocument | undefined>>
     pdfPages: PDFPagesType[],

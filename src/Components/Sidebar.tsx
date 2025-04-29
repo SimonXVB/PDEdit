@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react"
-import { pdfContext } from "../Context/PDFContext/pdfContext"
-import { PDFPageControls } from "./Individuals/PDFPageControls";
-import { SidebarPage } from "./Individuals/SidebarPage";
-import { OpenSidebarButton } from "./Individuals/OpenSidebarButton";
+import { pdfContext } from "../Context/PDFContext/pdfContext.ts"
+import { PDFPageControls } from "./Individuals/PDFPageControls.tsx";
+import { SidebarPage } from "./Individuals/SidebarPage.tsx";
+import { OpenSidebarButton } from "./Individuals/OpenSidebarButton.tsx";
 
 export function Sidebar() {
     const pdfCTX = useContext(pdfContext);

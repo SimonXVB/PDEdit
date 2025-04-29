@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from "react"
-import { errorContext } from "../../Context/ErrorContext/errorContext"
+import { errorContext } from "../../Context/ErrorContext/errorContext.ts"
 
 export function ErrorPopup() {
     const errorCTX = useContext(errorContext);

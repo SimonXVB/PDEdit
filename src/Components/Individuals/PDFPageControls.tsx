@@ -1,5 +1,5 @@
-import { useRotatePage } from "../../Hooks/useRotatePage";
-import { useRemovePage } from "../../Hooks/useRemovePage";
+import { useRotatePage } from "../../Hooks/useRotatePage.ts";
+import { useRemovePage } from "../../Hooks/useRemovePage.ts";
 
 export function PDFPageControls({ pageNum, index }: { pageNum: number, index: number }) {
     const { removePage } = useRemovePage();
