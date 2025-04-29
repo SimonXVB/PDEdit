@@ -11,6 +11,8 @@ export function useLoadInitialPDF() {
     const { loadPDF } = useLoadPDF();
 
     function loadInitialPDF(input: File) {
+        alert("load 1");
+
         if(input.type !== "application/pdf") {
             errorCTX.setError("fileTypeError");
             return;
@@ -19,13 +21,17 @@ export function useLoadInitialPDF() {
         try {
             const reader = new FileReader();
             reader.readAsDataURL(input);
-    
+            
+            alert("reader")
+
             reader.onload = async () => {
                 if(typeof reader.result === "string") {
                     const pdf = await PDFDocument.load(reader.result);
                     const bytes = await pdf.save();
                     const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
                     pdfCTX.setPDFDoc(pdf);
+
+                    alert(bytes)
 
                     loadPDF(URL.createObjectURL(pdfBlob));
                 };
