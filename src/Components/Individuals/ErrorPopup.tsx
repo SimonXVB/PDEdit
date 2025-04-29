@@ -8,7 +8,7 @@ export function ErrorPopup() {
     const errorRef = useRef<HTMLDivElement>(null);
 
     const errors = {
-        "fileTypeError": "Incorrect File Type",
+        "fileTypeError": "Invalid File Type",
         "addPageError": "Failed to add page.",
         "setURLError": "Internal Error",
         "rearrangePageError": "Failed to rearrange pages.",
