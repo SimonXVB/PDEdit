@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { pdfContext } from "../Context/PDFContext/pdfContext";
+import { pdfContext } from "../Context/PDFCTX/pdfContext";
 import { degrees } from "pdf-lib";
-import { errorContext } from "../Context/ErrorContext/errorContext";
+import { errorContext } from "../Context/ErrorCTX/errorContext";
 
 export function useRotatePage() {
     const pdfCTX = useContext(pdfContext);

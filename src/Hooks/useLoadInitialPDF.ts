@@ -1,7 +1,7 @@
 import { PDFDocument } from "pdf-lib";
 import { useContext } from "react";
-import { pdfContext } from "../Context/PDFContext/pdfContext";
-import { errorContext } from "../Context/ErrorContext/errorContext";
+import { pdfContext } from "../Context/PDFCTX/pdfContext";
+import { errorContext } from "../Context/ErrorCTX/errorContext";
 import { useLoadPDF } from "./useLoadPDF";
 
 export function useLoadInitialPDF() {

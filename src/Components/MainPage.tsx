@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
-import { pdfContext } from "../Context/PDFContext/pdfContext.ts";
+import { pdfContext } from "../Context/PDFCTX/pdfContext.ts";
 import { useLoadInitialPDF } from "../Hooks/useLoadInitialPDF.ts";
 import { useZoomPages } from "../Hooks/useZoomPages.ts";
 import { UploadButton } from "./Individuals/UploadButton.tsx";

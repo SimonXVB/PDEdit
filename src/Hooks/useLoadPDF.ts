@@ -1,7 +1,7 @@
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import { useContext } from "react";
-import { pdfContext } from "../Context/PDFContext/pdfContext";
-import { errorContext } from "../Context/ErrorContext/errorContext";
+import { pdfContext } from "../Context/PDFCTX/pdfContext";
+import { errorContext } from "../Context/ErrorCTX/errorContext";
 import { v4 as uuidv4 } from 'uuid';
 
 export function useLoadPDF() {

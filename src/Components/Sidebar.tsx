@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react"
-import { pdfContext } from "../Context/PDFContext/pdfContext.ts"
+import { pdfContext } from "../Context/PDFCTX/pdfContext.ts"
 import { PDFPageControls } from "./Individuals/PDFPageControls.tsx";
 import { SidebarPage } from "./Individuals/SidebarPage.tsx";
 import { OpenSidebarButton } from "./Individuals/OpenSidebarButton.tsx";

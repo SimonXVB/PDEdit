@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { pdfContext } from "../Context/PDFContext/pdfContext.ts";
+import { pdfContext } from "../Context/PDFCTX/pdfContext.ts";
 import { PDFPage } from "./Individuals/PDFPage.tsx";
 
 export function RenderPages() {

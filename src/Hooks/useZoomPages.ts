@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { zoomContext } from "../Context/ZoomContext/zoomContext";
+import { zoomContext } from "../Context/ZoomCTX/zoomContext";
 
 enum zoomEnum {
     plus = "plus",
