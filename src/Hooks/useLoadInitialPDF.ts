@@ -11,27 +11,14 @@ export function useLoadInitialPDF() {
     const { loadPDF } = useLoadPDF();
 
     function loadInitialPDF(input: File) {
-
-        const doc = document.createElement("div");
-        doc.innerHTML = "pre load";
-        document.getElementById("root")?.appendChild(doc);
-
         if(input.type !== "application/pdf") {
             errorCTX.setError("fileTypeError");
             return;
         };
 
         try {
-            const doc1 = document.createElement("div");
-            doc1.innerHTML = "try load";
-            document.getElementById("root")?.appendChild(doc1);
-
             const reader = new FileReader();
             reader.readAsDataURL(input);
-
-            const doc2 = document.createElement("div");
-            doc2.innerHTML = "read";
-            document.getElementById("root")?.appendChild(doc2);
             
             reader.onload = async () => {
                 if(typeof reader.result === "string") {
@@ -39,10 +26,6 @@ export function useLoadInitialPDF() {
                     const bytes = await pdf.save();
                     const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
                     pdfCTX.setPDFDoc(pdf);
-
-                    const doc3 = document.createElement("div");
-                    doc3.innerHTML = reader.result;
-                    document.getElementById("root")?.appendChild(doc3);
 
                     loadPDF(URL.createObjectURL(pdfBlob));
                 };
