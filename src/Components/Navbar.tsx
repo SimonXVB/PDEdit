@@ -14,9 +14,7 @@ export function Navbar() {
     const inputButtonRef = useRef<HTMLInputElement>(null);
 
     function handleAddPage(e: React.ChangeEvent<HTMLInputElement>) {
-        if(e.target.files) {
-            addPages(e.target.files[0]);
-        };
+        addPages(e.target.files![0]);
     };
 
     return (
