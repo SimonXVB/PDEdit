@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
-import { zoomContext } from "../../Context/ZoomCTX/zoomContext.ts";
+import { zoomContext } from "../../Context/ZoomContext/zoomContext.ts";
 import { PDFPagesType } from "../../Context/PDFCTX/pdfContext.ts";
 
 export function PDFPage({ el }: { el: PDFPagesType }) {

@@ -1,6 +1,6 @@
 import { ErrorContextProvider } from "./Context/ErrorCTX/ErrorContextProvider";
 import { PDFContextProvider } from "./Context/PDFCTX/PDFContextProvider";
-import { ZoomContextProvider } from "./Context/ZoomCTX/ZoomContextProvider";
+import { ZoomContextProvider } from "./Context/ZoomContext/ZoomContextProvider";
 import { MainPage } from "./Components/MainPage";
 import { ErrorPopup } from "./Components/Individuals/ErrorPopup";
 

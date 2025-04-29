@@ -1,8 +1,8 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useAddPages } from "../Hooks/useAddPages.ts";
 import { useZoomPages } from "../Hooks/useZoomPages.ts";
 import { NavbarButton } from "./Individuals/NavbarButton.tsx";
-import { zoomContext } from "../Context/ZoomCTX/zoomContext.ts";
+import { zoomContext } from "../Context/ZoomContext/zoomContext.ts";
 import { useDownloadPDF } from "../Hooks/useDownloadPDF.ts";
 
 export function Navbar() {
@@ -13,11 +13,21 @@ export function Navbar() {
     const zoomCTX = useContext(zoomContext);
     const inputButtonRef = useRef<HTMLInputElement>(null);
 
-    function handleAddPage(e: React.ChangeEvent<HTMLInputElement>) {
-        if(e.target.files) {
-            addPages(e.target.files[0]);
+    function handleAddPage(e: Event) {
+        const target = e.target as HTMLInputElement;
+
+        if(target.files) {
+            addPages(target.files[0]);
         };
     };
+
+    useEffect(() => {
+        const ref = inputButtonRef.current!;
+
+        ref.addEventListener("change", e => handleAddPage(e));
+        return ref.removeEventListener("change", handleAddPage);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className="flex justify-center sticky top-0 max-w-screen">
@@ -41,7 +51,7 @@ export function Navbar() {
                     </NavbarButton>
                 </div>
                 <NavbarButton title={"Add PDF"} onClick={() => inputButtonRef.current!.click()}>
-                    <input ref={inputButtonRef} type="file" onInput={handleAddPage} title="Add PDF" className="absolute h-full top-0 left-0 w-full opacity-0 cursor-pointer"/>
+                    <input ref={inputButtonRef} type="file" title="Add PDF" className="absolute h-full top-0 left-0 w-full opacity-0 cursor-pointer"/>
                     <p>Add PDF</p>
                 </NavbarButton>
             </nav>

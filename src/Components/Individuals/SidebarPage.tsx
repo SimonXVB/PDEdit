@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
 import { PDFPagesType } from "../../Context/PDFCTX/pdfContext.ts";
 import { useRearrangePages } from "../../Hooks/useRearrangePages.ts";
-import { zoomContext } from "../../Context/ZoomCTX/zoomContext.ts";
+import { zoomContext } from "../../Context/ZoomContext/zoomContext.ts";
 
 interface SideBarInterface {
     el: PDFPagesType, 
