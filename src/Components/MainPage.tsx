@@ -15,8 +15,8 @@ export function MainPage() {
     const { ctrlWheelZoom } = useZoomPages();
 
     function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
-        if(e.target.files) {
-            loadInitialPDF(e.target.files[0]);
+        if(e.currentTarget.files) {
+            loadInitialPDF(e.currentTarget.files[0]);
         };
     };
 
