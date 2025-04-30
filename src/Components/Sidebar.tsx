@@ -7,6 +7,7 @@ import { OpenSidebarButton } from "./Individuals/OpenSidebarButton.tsx";
 export function Sidebar() {
     const pdfCTX = useContext(pdfContext);
     const sidebarRef = useRef<HTMLDivElement>(null);
+
     const [draggingId, setDraggingId] = useState<number | null>(null);
     const [open, setOpen] = useState<boolean>(window.innerWidth <= 800 ? false : true);
 
@@ -31,9 +32,9 @@ export function Sidebar() {
 
     return (
         <>
-            <div className="fixed top-0 right-0 flex items-center z-20 h-full" ref={sidebarRef}>
+            <div className="fixed top-0 right-0 flex items-center z-20 h-screen" ref={sidebarRef}>
                 <OpenSidebarButton open={open} toggleSidebar={() => toggleSidebar()}/>
-                <div className="flex flex-col items-center h-screen p-4 border-l-4 overflow-y-auto border-cyan-500 bg-white *:last:mb-0" id="sidebarContainer">
+                <div className="relative flex flex-col items-center h-full p-4 border-l-4 overflow-y-auto border-cyan-500 bg-white" id="sidebarContainer">
                     {pdfCTX.pdfPages.map((el, i) => (
                         <div key={i}>
                             <SidebarPage el={el} i={i} draggingId={draggingId} setDraggingId={setDraggingId}/>
@@ -42,9 +43,7 @@ export function Sidebar() {
                     ))}
                 </div>
             </div>
-            {open && window.innerWidth <= 800 && 
-                <div className="fixed top-0 left-0 w-screen h-screen z-10" onClick={() => toggleSidebar()}></div>
-            }
+            {open && window.innerWidth <= 800 && <div className="fixed top-0 left-0 w-screen h-screen z-10" onClick={() => toggleSidebar()}></div>}
         </>
     )
 };

@@ -50,13 +50,3 @@
     display: none;
 }
 /*Sidebar Scrollbar*/
-
-/*Navbar*/
-@media (max-width: 440px) {
-    #navbar {
-        width: 100%;
-        border-radius: 0;
-        border-inline: 0;
-    }
-}
-/*Navbar*/
