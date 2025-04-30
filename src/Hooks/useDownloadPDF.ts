@@ -11,7 +11,7 @@ export function useDownloadPDF() {
             const dl = document.createElement("a");
 
             const pdf = pdfCTX.pdfDoc!;
-            pdf.setCreator("PDEdit.online");
+            pdf.setCreator("PDEdit");
             pdf.setCreationDate(new Date());
     
             const bytes = await pdf.save();

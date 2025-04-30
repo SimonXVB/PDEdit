@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
 import { pdfContext } from "../Context/PDFCTX/pdfContext.ts";
-import { useLoadInitialPDF } from "../Hooks/useLoadInitialPDF.ts";
 import { useZoomPages } from "../Hooks/useZoomPages.ts";
 import { UploadButton } from "./Individuals/UploadButton.tsx";
 import { RenderPages } from "./RenderPages.tsx";
@@ -11,12 +10,7 @@ export function MainPage() {
     const pdfCTX = useContext(pdfContext);
     const divRef = useRef<HTMLDivElement>(null);
 
-    const { loadInitialPDF } = useLoadInitialPDF();
     const { ctrlWheelZoom } = useZoomPages();
-
-    function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
-        loadInitialPDF(e.target.files![0]);
-    };
 
     useEffect(() => {
         if(divRef.current) {
@@ -31,7 +25,7 @@ export function MainPage() {
         <>
             {!pdfCTX.pdfDoc && 
                 <div className="h-screen flex justify-center items-center">
-                    <UploadButton handleFile={handleFile}/>
+                    <UploadButton/>
                 </div>
             }
             {pdfCTX.pdfDoc &&

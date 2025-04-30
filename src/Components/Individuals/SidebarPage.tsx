@@ -72,7 +72,7 @@ export function SidebarPage({ el, i, draggingId, setDraggingId }: SideBarInterfa
 
 
     return (
-        <div id={el.pdfID} className="relative">
+        <div className="relative">
             {draggingId === i && 
                 <div className="absolute top-0 left-0 w-full h-full bg-white z-10">
                     <div className="h-full rounded-xl border-2 border-dashed border-cyan-500"></div>

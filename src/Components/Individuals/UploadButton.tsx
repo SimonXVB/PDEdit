@@ -1,7 +1,13 @@
 import { useRef } from "react";
+import { useLoadInitialPDF } from "../../Hooks/useLoadInitialPDF";
 
-export function UploadButton({ handleFile }: { handleFile: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
+export function UploadButton() {
     const inputButtonRef = useRef<HTMLInputElement>(null);
+    const { loadInitialPDF } = useLoadInitialPDF();
+
+    function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+        loadInitialPDF(e.target.files![0]);
+    };
 
     return (
         <>

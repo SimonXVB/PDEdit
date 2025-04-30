@@ -2,7 +2,6 @@ import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import { useContext } from "react";
 import { pdfContext } from "../Context/PDFCTX/pdfContext";
 import { errorContext } from "../Context/ErrorCTX/errorContext";
-import { v4 as uuidv4 } from 'uuid';
 
 export function useLoadPDF() {
     const pdfCTX = useContext(pdfContext);
@@ -37,7 +36,6 @@ export function useLoadPDF() {
                 const img = canvas.toDataURL("image/png");
 
                 const pdfPage = {
-                    pdfID: uuidv4(),
                     pdfImg: img,
                     pdfInfo: {
                         height: viewport.height,

@@ -2,7 +2,6 @@ import { createContext, Dispatch, SetStateAction } from "react";
 import { PDFDocument } from "pdf-lib";
 
 export type PDFPagesType = {
-    pdfID: string,
     pdfImg: string,
     pdfInfo: { height: number, width: number, rotation: number }
 };
