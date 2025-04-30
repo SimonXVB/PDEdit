@@ -2,6 +2,7 @@
 
 # PDEdit
 ### PDEdit is a simple, open-source PDF Editor made using Vite/React TS
+### Available at: https://pdedit.simondev.xyz/
 # Features
 - Add PDF Documents
 - Remove PDF Pages
