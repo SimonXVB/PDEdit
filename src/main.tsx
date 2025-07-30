@@ -1,9 +1,15 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { App } from './App.tsx'
+import { PDFContextProvider } from "./Context/PDFCTX/PDFContextProvider";
+import { MainContextProvider } from "./Context/MainCTX/MainContextProvider";
+import { MainPage } from "./Components/MainPage/MainPage";
+import { ErrorPopup } from "./Components/ErrorPopup";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+export function Main() {
+  return (
+    <MainContextProvider>
+      <PDFContextProvider>
+        <MainPage/>
+        <ErrorPopup/>
+      </PDFContextProvider>
+    </MainContextProvider>
+  );
+};

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { zoomContext } from "../Context/ZoomContext/zoomContext";
+import { mainContext } from "../Context/MainCTX/mainContext";
 
 enum zoomEnum {
     plus = "plus",
@@ -7,13 +7,13 @@ enum zoomEnum {
 };
 
 export function useZoomPages() {
-    const zoomCTX = useContext(zoomContext);
+    const { zoomLevel, setZoomLevel } = useContext(mainContext);
 
     function zoomPages(zoom: "plus" | "minus") {
-        if(zoom === zoomEnum.plus && zoomCTX.zoomLevel < 2) {
-            zoomCTX.setZoomLevel(prev => Number((prev + 0.1).toFixed(2)));
-        } else if(zoom === zoomEnum.minus && zoomCTX.zoomLevel > 0.2) {
-            zoomCTX.setZoomLevel(prev => Number((prev - 0.1).toFixed(2)));
+        if(zoom === zoomEnum.plus && zoomLevel < 2) {
+            setZoomLevel(prev => Number((prev + 0.1).toFixed(2)));
+        } else if(zoom === zoomEnum.minus && zoomLevel > 0.2) {
+            setZoomLevel(prev => Number((prev - 0.1).toFixed(2)));
         };
     };
 

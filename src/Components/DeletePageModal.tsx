@@ -1,4 +1,4 @@
-export function DeletePageModal({ removePage, toggleModal }: {removePage: () => void, toggleModal: () => void}) {
+export function DeletePageModal({ removePage, toggleModal }: { removePage: () => void, toggleModal: () => void }) {
     return (
         <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full bg-gray-500/50 z-10" onClick={toggleModal}>
             <div className="bg-cyan-500 p-4 pt-2 rounded-xl shadow-lg shadow-gray-500">

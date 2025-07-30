@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { pdfContext } from "../Context/PDFCTX/pdfContext";
-import { errorContext } from "../Context/ErrorCTX/errorContext";
+import { mainContext } from "../Context/MainCTX/mainContext";
 
 export function useDownloadPDF() {
-    const pdfCTX = useContext(pdfContext);
-    const errorCTX = useContext(errorContext);
+    const { pdfDoc } = useContext(pdfContext);
+    const { setError } = useContext(mainContext);
 
     async function downloadPDF() {
         try {
             const dl = document.createElement("a");
 
-            const pdf = pdfCTX.pdfDoc!;
+            const pdf = pdfDoc!;
             pdf.setCreator("PDEdit");
             pdf.setCreationDate(new Date());
     
@@ -18,10 +18,12 @@ export function useDownloadPDF() {
             const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
     
             dl.href = URL.createObjectURL(pdfBlob);
-            dl.download = "PDEdit.pdf";
+            dl.download = "PDF Doc.pdf";
             dl.click();
+
+            document.removeChild(dl);
         } catch (error) {
-            errorCTX.setError("downloadPDFError");
+            setError("downloadPDFError");
             console.error("An error occurred: ", error);
         };
     };

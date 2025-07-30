@@ -1,22 +1,22 @@
 import { useContext } from "react";
 import { pdfContext } from "../Context/PDFCTX/pdfContext";
-import { errorContext } from "../Context/ErrorCTX/errorContext";
+import { mainContext } from "../Context/MainCTX/mainContext";
 
 export function useRemovePage() {
-    const pdfCTX = useContext(pdfContext);
-    const errorCTX = useContext(errorContext);
+    const { pdfDoc, setPDFDoc, setPDFPages } = useContext(pdfContext);
+    const { setError } = useContext(mainContext);
 
     async function removePage(index: number) {
         try {
-            const pdf = pdfCTX.pdfDoc!;
+            const pdf = pdfDoc!;
 
             pdf.removePage(index);
             await pdf.save();
-            pdfCTX.setPDFDoc(pdf);
+            setPDFDoc(pdf);
 
-            pdfCTX.setPDFPages(prev => prev.filter((_el, i) => i !== index));
+            setPDFPages(prev => prev.filter((_el, i) => i !== index));
         } catch (error) {
-            errorCTX.setError("removePageError");
+            setError("removePageError");
             console.error("An error occurred: ", error);
         };
     };

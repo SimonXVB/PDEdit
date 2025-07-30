@@ -1,16 +1,18 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 import { PDFDocument } from "pdf-lib";
 
-export type PDFPagesType = {
+export interface PDFPagesInterface {
     pdfImg: string,
-    pdfInfo: { height: number, width: number, rotation: number }
+    height: number, 
+    width: number, 
+    rotation: number
 };
  
 export interface PDFInterface {
     pdfDoc: PDFDocument | undefined,
     setPDFDoc: Dispatch<SetStateAction<PDFDocument | undefined>>
-    pdfPages: PDFPagesType[],
-    setPDFPages: Dispatch<SetStateAction<PDFPagesType[]>>
+    pdfPages: PDFPagesInterface[],
+    setPDFPages: Dispatch<SetStateAction<PDFPagesInterface[]>>
 };
 
 export const pdfContext = createContext<PDFInterface>({} as PDFInterface);

@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef } from "react";
-import { pdfContext } from "../Context/PDFCTX/pdfContext.ts";
-import { useZoomPages } from "../Hooks/useZoomPages.ts";
+import { pdfContext } from "../../Context/PDFCTX/pdfContext.ts";
+import { useZoomPages } from "../../Hooks/useZoomPages.ts";
 import { UploadButton } from "./Individuals/UploadButton.tsx";
-import { RenderPages } from "./RenderPages.tsx";
-import { Sidebar } from "./Sidebar.tsx";
-import { Navbar } from "./Navbar.tsx";
+import { RenderPages } from "../PDFPages/RenderPages.tsx";
+import { Sidebar } from "../Sidebar/Sidebar.tsx";
+import { Navbar } from "../Navbar/Navbar.tsx";
 
 export function MainPage() {
     const pdfCTX = useContext(pdfContext);

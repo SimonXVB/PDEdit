@@ -1,8 +1,8 @@
-import { useRotatePage } from "../../Hooks/useRotatePage.ts";
-import { useRemovePage } from "../../Hooks/useRemovePage.ts";
+import { useRotatePage } from "../../../Hooks/useRotatePage.ts";
+import { useRemovePage } from "../../../Hooks/useRemovePage.ts";
+import { useRearrangePages } from "../../../Hooks/useRearrangePages.ts";
 import { SidebarButton } from "./SidebarButton.tsx";
-import { useRearrangePages } from "../../Hooks/useRearrangePages.ts";
-import { DeletePageModal } from "./DeletePageModal.tsx";
+import { DeletePageModal } from "../../DeletePageModal.tsx";
 import { useState } from "react";
 
 export function PDFPageControls({ pageNum, index }: { pageNum: number, index: number }) {

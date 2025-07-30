@@ -1,17 +1,17 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
-import { PDFPagesType } from "../../Context/PDFCTX/pdfContext.ts";
-import { useRearrangePages } from "../../Hooks/useRearrangePages.ts";
-import { zoomContext } from "../../Context/ZoomContext/zoomContext.ts";
+import { PDFPagesInterface } from "../../../Context/PDFCTX/pdfContext.ts";
+import { useRearrangePages } from "../../../Hooks/useRearrangePages.ts";
+import { mainContext } from "../../../Context/MainCTX/mainContext.ts";
 
 interface SideBarInterface {
-    el: PDFPagesType, 
+    el: PDFPagesInterface, 
     i: number, 
     draggingId: number | null, 
     setDraggingId: Dispatch<SetStateAction<number | null>>
 };
 
 export function SidebarPage({ el, i, draggingId, setDraggingId }: SideBarInterface) {
-    const zoomCTX = useContext(zoomContext);
+    const { zoomLevel } = useContext(mainContext);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     
     const { rearrangePages } = useRearrangePages();
@@ -41,34 +41,34 @@ export function SidebarPage({ el, i, draggingId, setDraggingId }: SideBarInterfa
     };
 
     useEffect(() => {
-        const rotation = el.pdfInfo.rotation;
+        const rotation = el.rotation;
         const ctx = canvasRef.current!.getContext("2d");
         const img = new Image();
 
         img.onload = () => {
             if(rotation === 90 || rotation === 270) {
-                canvasRef.current!.height = (el.pdfInfo.width * 0.1);
-                canvasRef.current!.width = (el.pdfInfo.height * 0.1);
+                canvasRef.current!.height = (el.width * 0.1);
+                canvasRef.current!.width = (el.height * 0.1);
     
                 ctx!.save()
                 ctx!.scale(0.1, 0.1);
-                ctx!.translate(el.pdfInfo.height / 2, el.pdfInfo.width / 2);
+                ctx!.translate(el.height / 2, el.width / 2);
             } else {
-                canvasRef.current!.height = (el.pdfInfo.height * 0.1);
-                canvasRef.current!.width = (el.pdfInfo.width * 0.1);
+                canvasRef.current!.height = (el.height * 0.1);
+                canvasRef.current!.width = (el.width * 0.1);
     
                 ctx!.save();
                 ctx!.scale(0.1, 0.1);
-                ctx!.translate(el.pdfInfo.width / 2, el.pdfInfo.height / 2);
+                ctx!.translate(el.width / 2, el.height / 2);
             };
     
-            ctx!.rotate(el.pdfInfo.rotation * (Math.PI / 180));
-            ctx!.drawImage(img, -(el.pdfInfo.width / 2), -(el.pdfInfo.height / 2), el.pdfInfo.width, el.pdfInfo.height);
+            ctx!.rotate(el.rotation * (Math.PI / 180));
+            ctx!.drawImage(img, -(el.width / 2), -(el.height / 2), el.width, el.height);
             ctx!.restore();
         };
 
         img.src = el.pdfImg;
-    }, [el.pdfImg, el.pdfInfo.height, el.pdfInfo.rotation, el.pdfInfo.width, zoomCTX.zoomLevel]);
+    }, [el.pdfImg, el.height, el.rotation, el.width, zoomLevel]);
 
 
     return (

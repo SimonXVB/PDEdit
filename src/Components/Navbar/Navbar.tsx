@@ -1,9 +1,9 @@
 import { useContext, useRef } from "react";
-import { useAddPages } from "../Hooks/useAddPages.ts";
-import { useZoomPages } from "../Hooks/useZoomPages.ts";
+import { useAddPages } from "../../Hooks/useAddPages.ts";
+import { useZoomPages } from "../../Hooks/useZoomPages.ts";
 import { NavbarButton } from "./Individuals/NavbarButton.tsx";
 import { zoomContext } from "../Context/ZoomContext/zoomContext.ts";
-import { useDownloadPDF } from "../Hooks/useDownloadPDF.ts";
+import { useDownloadPDF } from "../../Hooks/useDownloadPDF.ts";
 
 export function Navbar() {
     const { addPages } = useAddPages();

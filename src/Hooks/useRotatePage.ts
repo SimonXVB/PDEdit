@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { pdfContext } from "../Context/PDFCTX/pdfContext";
 import { degrees } from "pdf-lib";
-import { errorContext } from "../Context/ErrorCTX/errorContext";
+import { mainContext } from "../Context/MainCTX/mainContext";
 
 export function useRotatePage() {
-    const pdfCTX = useContext(pdfContext);
-    const errorCTX = useContext(errorContext);
+    const { pdfDoc, setPDFPages, setPDFDoc } = useContext(pdfContext);
+    const { setError } = useContext(mainContext);
 
     async function rotatePage(index: number) {
         try {
-            const pdf = pdfCTX.pdfDoc!;
+            const pdf = pdfDoc!;
             const page = pdf.getPage(index);
 
             const rotation = page.getRotation().angle >= 360 ? 0 : page.getRotation().angle;
@@ -20,17 +20,17 @@ export function useRotatePage() {
     
             await pdf.save();
 
-            pdfCTX.setPDFPages(prev => {
+            setPDFPages(prev => {
                 const arr = [...prev];
                 
-                arr[index].pdfInfo.rotation = rotation + 90;
+                arr[index].rotation = rotation + 90;
 
                 return arr;
             });
             
-            pdfCTX.setPDFDoc(pdf);
+            setPDFDoc(pdf);
         } catch (error) {
-            errorCTX.setError("rotatePageError");
+            setError("rotatePageError");
             console.error("An error occurred: ", error);
         };
     };

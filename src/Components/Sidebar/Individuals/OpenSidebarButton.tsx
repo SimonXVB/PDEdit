@@ -1,4 +1,4 @@
-export function OpenSidebarButton({open, toggleSidebar}: {open: boolean, toggleSidebar: () => void}) {
+export function OpenSidebarButton({open, toggleSidebar}: { open: boolean, toggleSidebar: () => void }) {
     return ( 
         <button className="bg-cyan-500 p-1 rounded-l-xl cursor-pointer border-[1px] border-r-0 border-cyan-500 hover:bg-white hover:*:fill-cyan-500" onClick={toggleSidebar}>
             {open ? 
