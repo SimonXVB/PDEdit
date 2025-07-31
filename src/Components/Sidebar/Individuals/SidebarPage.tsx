@@ -4,13 +4,13 @@ import { useRearrangePages } from "../../../Hooks/useRearrangePages.ts";
 import { mainContext } from "../../../Context/MainCTX/mainContext.ts";
 
 interface SideBarInterface {
-    el: PDFPagesInterface, 
-    i: number, 
+    page: PDFPagesInterface, 
+    index: number, 
     draggingId: number | null, 
     setDraggingId: Dispatch<SetStateAction<number | null>>
 };
 
-export function SidebarPage({ el, i, draggingId, setDraggingId }: SideBarInterface) {
+export function SidebarPage({ page, index, draggingId, setDraggingId }: SideBarInterface) {
     const { zoomLevel } = useContext(mainContext);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     
@@ -41,47 +41,47 @@ export function SidebarPage({ el, i, draggingId, setDraggingId }: SideBarInterfa
     };
 
     useEffect(() => {
-        const rotation = el.rotation;
+        const rotation = page.rotation;
         const ctx = canvasRef.current!.getContext("2d");
         const img = new Image();
 
         img.onload = () => {
             if(rotation === 90 || rotation === 270) {
-                canvasRef.current!.height = (el.width * 0.1);
-                canvasRef.current!.width = (el.height * 0.1);
+                canvasRef.current!.height = (page.width * 0.1);
+                canvasRef.current!.width = (page.height * 0.1);
     
                 ctx!.save()
                 ctx!.scale(0.1, 0.1);
-                ctx!.translate(el.height / 2, el.width / 2);
+                ctx!.translate(page.height / 2, page.width / 2);
             } else {
-                canvasRef.current!.height = (el.height * 0.1);
-                canvasRef.current!.width = (el.width * 0.1);
+                canvasRef.current!.height = (page.height * 0.1);
+                canvasRef.current!.width = (page.width * 0.1);
     
                 ctx!.save();
                 ctx!.scale(0.1, 0.1);
-                ctx!.translate(el.width / 2, el.height / 2);
+                ctx!.translate(page.width / 2, page.height / 2);
             };
     
-            ctx!.rotate(el.rotation * (Math.PI / 180));
-            ctx!.drawImage(img, -(el.width / 2), -(el.height / 2), el.width, el.height);
+            ctx!.rotate(page.rotation * (Math.PI / 180));
+            ctx!.drawImage(img, -(page.width / 2), -(page.height / 2), page.width, page.height);
             ctx!.restore();
         };
 
-        img.src = el.pdfImg;
-    }, [el.pdfImg, el.height, el.rotation, el.width, zoomLevel]);
+        img.src = page.pdfImg;
+    }, [page.pdfImg, page.height, page.rotation, page.width, zoomLevel]);
 
 
     return (
         <div className="relative">
-            {draggingId === i && 
+            {draggingId === index && 
                 <div className="absolute top-0 left-0 w-full h-full bg-white z-10">
                     <div className="h-full rounded-xl border-2 border-dashed border-cyan-500"></div>
                 </div>
             }
             <canvas ref={canvasRef} className="border-[1px] cursor-grab w-[120px]"
-                onDragStart={() => setDraggingId(i)}
+                onDragStart={() => setDraggingId(index)}
                 onDragOver={e => handleDragOver(e)}
-                onDrop={e => handleDrop(e, i)}
+                onDrop={e => handleDrop(e, index)}
                 onDragLeave={e => handleDragLeave(e)}
                 onDragEnd={() => setDraggingId(null)}
                 draggable

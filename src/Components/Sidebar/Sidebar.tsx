@@ -5,45 +5,34 @@ import { SidebarPage } from "./Individuals/SidebarPage.tsx";
 import { OpenSidebarButton } from "./Individuals/OpenSidebarButton.tsx";
 
 export function Sidebar() {
-    const pdfCTX = useContext(pdfContext);
+    const { pdfPages, pdfDoc } = useContext(pdfContext);
     const sidebarRef = useRef<HTMLDivElement>(null);
 
     const [draggingId, setDraggingId] = useState<number | null>(null);
     const [open, setOpen] = useState<boolean>(window.innerWidth <= 800 ? false : true);
 
-    function toggleSidebar() {
-        if(open) {
-            setOpen(false);
+    useEffect(() => {
+        if(!open) {
             sidebarRef.current!.style.animation = "out-sidebar .75s ease forwards";
         } else {
-            setOpen(true);
             sidebarRef.current!.style.animation = "in-sidebar .75s ease forwards";
         };
-    };
-
-    useEffect(() => {
-        if(open) {
-            sidebarRef.current!.style.transform = "translateX(0%)";
-        } else {
-            sidebarRef.current!.style.transform = "translateX(85%)";
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+    }, [open]);
+ 
     return (
         <>
             <div className="fixed top-0 right-0 flex items-center z-20 h-screen" ref={sidebarRef}>
-                <OpenSidebarButton open={open} toggleSidebar={() => toggleSidebar()}/>
-                <div className="relative flex flex-col items-center h-full p-4 border-l-4 overflow-y-auto border-cyan-500 bg-white" id="sidebarContainer">
-                    {pdfCTX.pdfPages.map((el, i) => (
+                <OpenSidebarButton open={open} setOpen={() => setOpen(!open)}/>
+                <div className="relative flex flex-col items-center h-full p-4 border-l-2 overflow-y-auto border-rose-500 bg-white" id="sidebarContainer">
+                    {pdfPages.map((page, i) => (
                         <div key={i}>
-                            <SidebarPage el={el} i={i} draggingId={draggingId} setDraggingId={setDraggingId}/>
-                            <PDFPageControls pageNum={pdfCTX.pdfDoc!.getPageCount()} index={i}/>
+                            <SidebarPage page={page} index={i} draggingId={draggingId} setDraggingId={setDraggingId}/>
+                            <PDFPageControls pageNum={pdfDoc!.getPageCount()} index={i}/>
                         </div>
                     ))}
                 </div>
             </div>
-            {open && window.innerWidth <= 800 && <div className="fixed top-0 left-0 w-screen h-screen z-10" onClick={() => toggleSidebar()}></div>}
+            {open && window.innerWidth <= 800 && <div className="fixed top-0 left-0 w-screen h-screen z-10" onClick={() => setOpen(!open)}></div>}
         </>
     )
 };
