@@ -59,9 +59,9 @@ export function PDFPage({ page, pageNum }: { page: PDFPagesInterface, pageNum: n
     }, [page.pdfImg, page.height, page.rotation, page.width, zoomLevel]);
 
     return (
-        <div className="flex mx-auto mb-4">
-            <p className="text-white text-lg bg-rose-500 h-fit p-2 rounded-l-xs font-bold">{pageNum}</p>
+        <div className="mx-auto mb-4">
             <canvas className="border-2 border-gray-700" ref={canvasRef}></canvas>
+            <p className="text-black text-center text-lg h-fit p-2 font-semibold">{pageNum}</p>
         </div>
     )
 };

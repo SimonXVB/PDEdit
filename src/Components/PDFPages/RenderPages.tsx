@@ -8,7 +8,7 @@ export function RenderPages() {
     return (
         <div className="flex flex-col overflow-x-auto mx-2 w-full">
             {pdfPages.map((page, i) => (
-                <PDFPage page={page} pageNum={i +1} key={i}/>
+                <PDFPage page={page} pageNum={i + 1} key={i}/>
             ))}
         </div>
     )

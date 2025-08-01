@@ -35,7 +35,7 @@ export function Sidebar() {
                             <PDFPageControls pageNum={pdfDoc!.getPageCount()} index={i} setDeleteIndex={() => setDeleteIndex(i)}/>
                             <div>
                                 <SidebarPage page={page} index={i} draggingId={draggingId} setDraggingId={setDraggingId}/>
-                                <p className="text-center px-1 text-rose-500 font-semibold">{i + 1}</p>
+                                <p className="text-center px-1 text-black">{i + 1}</p>
                             </div>
                         </div>
                     ))}

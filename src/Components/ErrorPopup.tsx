@@ -14,7 +14,7 @@ export function ErrorPopup() {
         "rearrangePageError": "Failed to rearrange pages.",
         "removePageError": "Failed to remove page",
         "rotatePageError": "Failed to rotate page",
-        "downloadPDFError": "Failed to download PDF"
+        "downloadPDFError": "Failed to download PDF",
     };
 
     useEffect(() => {
