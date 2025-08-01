@@ -11,6 +11,7 @@ export function useDownloadPDF() {
             const dl = document.createElement("a");
 
             const pdf = pdfDoc!;
+            pdf.setTitle("Edited with PDEdit")
             pdf.setCreator("PDEdit");
             pdf.setCreationDate(new Date());
     
@@ -18,10 +19,8 @@ export function useDownloadPDF() {
             const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
     
             dl.href = URL.createObjectURL(pdfBlob);
-            dl.download = "PDF Doc.pdf";
+            dl.download = "Doc.pdf";
             dl.click();
-
-            document.removeChild(dl);
         } catch (error) {
             setError("downloadPDFError");
             console.error("An error occurred: ", error);

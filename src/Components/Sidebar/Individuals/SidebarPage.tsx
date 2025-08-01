@@ -19,8 +19,8 @@ export function SidebarPage({ page, index, draggingId, setDraggingId }: SideBarI
     function handleDragOver(e: React.DragEvent<HTMLCanvasElement>) {
         e.preventDefault();
 
-        e.currentTarget.style.borderColor = "#00b8db";
-        e.currentTarget.style.outline = "3px solid #00b8db";
+        e.currentTarget.style.borderColor = "#fb2c36";
+        e.currentTarget.style.outline = "1px solid #fb2c36";
     };
 
     function handleDragLeave(e: React.DragEvent<HTMLCanvasElement>) {
@@ -75,7 +75,7 @@ export function SidebarPage({ page, index, draggingId, setDraggingId }: SideBarI
         <div className="relative">
             {draggingId === index && 
                 <div className="absolute top-0 left-0 w-full h-full bg-white z-10">
-                    <div className="h-full rounded-xl border-2 border-dashed border-cyan-500"></div>
+                    <div className="h-full rounded-xs border-2 border-dashed border-rose-500"></div>
                 </div>
             }
             <canvas ref={canvasRef} className="border-[1px] cursor-grab w-[120px]"

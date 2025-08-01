@@ -20,7 +20,7 @@ export function OpenPDFPage() {
     });
 
     return (
-        <div ref={ref} className="min-h-screen h-full">
+        <div ref={ref} className="min-h-screen h-full px-6">
             <Navbar/>
             <div className="flex">
                 <RenderPages/>
