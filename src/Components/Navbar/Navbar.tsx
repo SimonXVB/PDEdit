@@ -1,19 +1,19 @@
 import { useContext } from "react";
-import { useAddPages } from "../../Hooks/useAddPages.ts";
+import { useSetPDF } from "../../Hooks/setPDF.ts";
 import { useZoomPages } from "../../Hooks/useZoomPages.ts";
 import { NavbarButton } from "./Individuals/NavbarButton.tsx";
 import { useDownloadPDF } from "../../Hooks/useDownloadPDF.ts";
 import { mainContext } from "../../Context/MainCTX/mainContext.ts";
 
 export function Navbar() {
-    const { addPages } = useAddPages();
+    const { setPDF } = useSetPDF();
     const { zoomPages } = useZoomPages();
     const { downloadPDF } = useDownloadPDF();
     
     const { zoomLevel } = useContext(mainContext);
 
     function handleAddPage(e: React.ChangeEvent<HTMLInputElement>) {
-        addPages(e.target.files![0]);
+        setPDF(e.target.files![0]);
     };
 
     return (

@@ -1,10 +1,10 @@
-import { useLoadInitialPDF } from "../../../Hooks/useLoadInitialPDF";
+import { useSetPDF } from "../../../Hooks/setPDF";
 
 export function UploadButton() {
-    const { loadInitialPDF } = useLoadInitialPDF();
+    const { setPDF } = useSetPDF();
 
     function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
-        loadInitialPDF(e.target.files![0]);
+        setPDF(e.target.files![0]);
     };
 
     return (
