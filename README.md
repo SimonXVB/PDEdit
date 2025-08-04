@@ -1,17 +1,11 @@
-![PDEdit-Banner](https://github.com/user-attachments/assets/4eb06e23-b6da-4447-969a-9426d34e7bf5)
+<img width="589" height="223" alt="Logo" src="https://github.com/user-attachments/assets/7e6c5053-d4fb-4516-91d4-e9fbb91b7463" />
 
-# PDEdit
-### PDEdit is a simple, open-source PDF Editor made using Vite/React TS
-### Available at: https://pdedit.simondev.xyz/
+### PDEdit is a simple PDF viewer with basic editing, made using Vite/React + TS
+Available at: https://pdedit.simondev.xyz/
 # Features
 - Add PDF Documents
 - Remove PDF Pages
 - Rotate PDF Pages
 - Rearrange PDF Pages
 - Download the finished PDF
-
-## Notes
-- This app uses PDF.js to render the actual PDF File.
-- PDF-LIB is used for all of the backend PDF editing.
-- I initially wanted to add even more features to this project (e.g. adding text, drawing, adding images, etc.), but none of that ended up working out how I envisioned it, and the project had already taken up like a month of my time, so I decided to not implement them. :-)
-- Enjoy ✌️
+- Works on mobile devices
