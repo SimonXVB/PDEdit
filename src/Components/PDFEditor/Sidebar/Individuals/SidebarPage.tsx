@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
-import { PDFPagesInterface } from "../../../Context/PDFCTX/pdfContext.ts";
-import { useRearrangePages } from "../../../Hooks/useRearrangePages.ts";
-import { mainContext } from "../../../Context/MainCTX/mainContext.ts";
+import { PDFPagesInterface } from "../../../../Context/PDFCTX/pdfContext.ts";
+import { useRearrangePages } from "../../../../Hooks/useRearrangePages.ts";
+import { mainContext } from "../../../../Context/MainCTX/mainContext.ts";
 
 interface SideBarInterface {
     page: PDFPagesInterface, 

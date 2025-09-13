@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react"
-import { pdfContext } from "../../Context/PDFCTX/pdfContext.ts"
+import { pdfContext } from "../../../Context/PDFCTX/pdfContext.ts";
 import { PDFPageControls } from "./Individuals/PDFPageControls.tsx";
 import { SidebarPage } from "./Individuals/SidebarPage.tsx";
 import { OpenSidebarButton } from "./Individuals/OpenSidebarButton.tsx";
 import { DeletePageModal } from "./Individuals/DeletePageModal.tsx";
-import { useRemovePage } from "../../Hooks/useRemovePage.ts";
+import { useRemovePage } from "../../../Hooks/useRemovePage.ts";
 
 export function Sidebar() {
     const { pdfPages, pdfDoc } = useContext(pdfContext);

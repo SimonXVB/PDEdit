@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useZoomPages } from "../../Hooks/useZoomPages";
-import { Navbar } from "../Navbar/Navbar"
-import { RenderPages } from "../PDFPages/RenderPages"
-import { Sidebar } from "../Sidebar/Sidebar"
+import { Navbar } from "./Navbar/Navbar";
+import { RenderPages } from "./RenderPages"
+import { Sidebar } from "./Sidebar/Sidebar";
 
-export function OpenPDFPage() {
+export function PDFEditor() {
     const { ctrlWheelZoom } = useZoomPages();
 
     const ref = useRef<HTMLDivElement>(null);

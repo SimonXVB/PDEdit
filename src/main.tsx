@@ -1,15 +1,17 @@
-import { PDFContextProvider } from "./Context/PDFCTX/PDFContextProvider";
-import { MainContextProvider } from "./Context/MainCTX/MainContextProvider";
-import { MainPage } from "./Components/Pages/MainPage";
+import { useContext } from "react";
+import { LandingPage } from "./Components/LandingPage/LandingPage";
+import { PDFEditor } from "./Components/PDFEditor/PDFEditor";
 import { ErrorPopup } from "./Components/ErrorPopup";
+import { pdfContext } from "./Context/PDFCTX/pdfContext";
 
 export function Main() {
+  const pdfCTX = useContext(pdfContext);
+
   return (
-    <MainContextProvider>
-      <PDFContextProvider>
-        <MainPage/>
-        <ErrorPopup/>
-      </PDFContextProvider>
-    </MainContextProvider>
+    <>
+      {!pdfCTX.pdfDoc && <LandingPage/>}
+      {pdfCTX.pdfDoc && <PDFEditor/>}
+      <ErrorPopup/>
+    </>
   );
 };

@@ -1,5 +1,5 @@
-import { useRotatePage } from "../../../Hooks/useRotatePage.ts";
-import { useRearrangePages } from "../../../Hooks/useRearrangePages.ts";
+import { useRotatePage } from "../../../../Hooks/useRotatePage.ts";
+import { useRearrangePages } from "../../../../Hooks/useRearrangePages.ts";
 import { SidebarButton } from "./SidebarButton.tsx";
 
 export function PDFPageControls({ pageNum, index, setDeleteIndex }: { pageNum: number, index: number, setDeleteIndex: () => void }) {

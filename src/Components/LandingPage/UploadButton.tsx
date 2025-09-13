@@ -1,4 +1,4 @@
-import { useSetPDF } from "../../../Hooks/setPDF";
+import { useSetPDF } from "../../Hooks/setPDF";
 
 export function UploadButton() {
     const { setPDF } = useSetPDF();

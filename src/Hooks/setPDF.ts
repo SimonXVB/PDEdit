@@ -10,7 +10,7 @@ export function useSetPDF() {
 
     const { loadPDF } = useLoadPDF();
     
-    async function setPDF(input: File) {
+    async function setPDF(input: File) {        
         if(input.type !== "application/pdf") {
             setError("fileTypeError");
             return;

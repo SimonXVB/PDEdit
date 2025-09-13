@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { useSetPDF } from "../../Hooks/setPDF.ts";
-import { useZoomPages } from "../../Hooks/useZoomPages.ts";
+import { useSetPDF } from "../../../Hooks/setPDF.ts";
+import { useZoomPages } from "../../../Hooks/useZoomPages.ts";
+import { useDownloadPDF } from "../../../Hooks/useDownloadPDF.ts";
+import { mainContext } from "../../../Context/MainCTX/mainContext.ts";
 import { NavbarButton } from "./Individuals/NavbarButton.tsx";
-import { useDownloadPDF } from "../../Hooks/useDownloadPDF.ts";
-import { mainContext } from "../../Context/MainCTX/mainContext.ts";
 
 export function Navbar() {
     const { setPDF } = useSetPDF();
