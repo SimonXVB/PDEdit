@@ -2,19 +2,22 @@ import { useContext } from "react";
 import { pdfContext } from "../Context/PDFCTX/pdfContext";
 import { PDFDocument } from "pdf-lib";
 import { mainContext } from "../Context/MainCTX/mainContext";
-import { useLoadPDF } from "./useLoadPDF";
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 
 export function useSetPDF() {
-    const { pdfDoc, setPDFDoc } = useContext(pdfContext);
+    const { pdfDoc, setPDFDoc, setPDFPages } = useContext(pdfContext);
     const { setError } = useContext(mainContext);
-
-    const { loadPDF } = useLoadPDF();
     
     async function setPDF(input: File) {        
         if(input.type !== "application/pdf") {
             setError("fileTypeError");
             return;
         };
+
+        GlobalWorkerOptions.workerSrc = new URL(
+            'pdfjs-dist/build/pdf.worker.min.mjs',
+            import.meta.url
+        ).toString();
 
         try {
             const mainPDF = await PDFDocument.create();
@@ -32,13 +35,40 @@ export function useSetPDF() {
                 const copyNew = await mainPDF.copyPages(newPDF, newPDF.getPageIndices());
                 copyNew.forEach(page => mainPDF.addPage(page));
 
-                await mainPDF.save();
+                const bytes = await mainPDF.save();
+                const pdfBlob = new Blob([bytes as BlobPart], {type: 'application/pdf'});
+                const pdf = await getDocument(URL.createObjectURL(pdfBlob)).promise;
+                
                 setPDFDoc(mainPDF);
 
-                const bytes = await newPDF.save();
-                const pdfBlob = new Blob([bytes], {type: 'application/pdf'});
+                for(let i = 1; i <= pdf._pdfInfo.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 1.5 });
+        
+                    const canvas: HTMLCanvasElement = document.createElement("canvas");
+                    const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
+                    
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
 
-                loadPDF(URL.createObjectURL(pdfBlob));
+                    const renderParams = {
+                        canvasContext: ctx,
+                        canvas: canvas,
+                        viewport: viewport
+                    };
+                    
+                    await page.render(renderParams).promise;
+                    const img = canvas.toDataURL("image/png");
+
+                    const pdfPage = {
+                        pdfImg: img,
+                        height: viewport.height,
+                        width: viewport.width,
+                        rotation: 360
+                    };
+
+                    setPDFPages(prev => [...prev, pdfPage]);
+                };
             };
         } catch (error) {
             setError("setPDFError");

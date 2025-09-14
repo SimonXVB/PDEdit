@@ -9,8 +9,7 @@ export function ErrorPopup() {
 
     const errors = {
         "fileTypeError": "Invalid file type",
-        "setPDFError": "Failed to set PDF",
-        "setURLError": "Internal Error",
+        "setPDFError": "Failed to load PDF",
         "rearrangePageError": "Failed to rearrange pages.",
         "removePageError": "Failed to remove page",
         "rotatePageError": "Failed to rotate page",

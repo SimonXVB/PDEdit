@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import { pdfContext } from "../../../Context/PDFCTX/pdfContext.ts";
 import { PDFPageControls } from "./Individuals/PDFPageControls.tsx";
 import { SidebarPage } from "./Individuals/SidebarPage.tsx";
@@ -17,18 +17,20 @@ export function Sidebar() {
 
     const { removePage } = useRemovePage();
 
-    useEffect(() => {
-        if(!open) {
+    function toggleSidebar() {
+        if(open) {
             sidebarRef.current!.style.animation = "out-sidebar .75s ease forwards";
+            setOpen(false);
         } else {
             sidebarRef.current!.style.animation = "in-sidebar .75s ease forwards";
+            setOpen(true);
         };
-    }, [open]);
+    };
  
     return (
         <>
             <div className="fixed top-0 right-0 flex items-center h-screen z-20" ref={sidebarRef}>
-                <OpenSidebarButton open={open} setOpen={() => setOpen(!open)}/>
+                <OpenSidebarButton open={open} toggleSidebar={toggleSidebar}/>
                 <div className="flex flex-col items-center h-full p-4 pl-2 border-l-2 overflow-y-auto border-rose-500 bg-white" id="sidebarContainer">
                     {pdfPages.map((page, i) => (
                         <div key={i} className="flex mb-1">
