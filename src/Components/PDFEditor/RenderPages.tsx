@@ -8,23 +8,31 @@ export function RenderPages() {
     const canvasRefs = useRef<HTMLCanvasElement[]>([]);
 
     useEffect(() => {
-        const height = 1500;
-        const width = 1000;
-
         pdfPages.forEach((page, i) => {
             const img = new Image();
             img.src = page.pdfImg;
 
+            const is90Degs = (page.rotation === 90 || page.rotation === 270);
+
+            const RATIO = is90Degs ? page.width / page.height : page.height / page.width;
+            const WIDTH = window.innerWidth * 0.6;
+            const HEIGHT = (window.innerWidth * RATIO) * 0.6;
+
             img.onload = () => {
                 const ctx = canvasRefs.current[i].getContext("2d");
 
-                canvasRefs.current[i].height = (height * zoomLevel);
-                canvasRefs.current[i].width = (width * zoomLevel);
+                canvasRefs.current[i].width = WIDTH * zoomLevel;
+                canvasRefs.current[i].height = HEIGHT * zoomLevel;
 
                 ctx!.scale(zoomLevel, zoomLevel);
-                ctx!.translate(width / 2, height / 2);
+                ctx!.translate(WIDTH / 2, HEIGHT / 2);
                 ctx!.rotate(page.rotation * (Math.PI / 180));
-                ctx!.drawImage(img, -(width / 2), -(height / 2), width, height);
+
+                if(is90Degs) {
+                    ctx!.drawImage(img, -(HEIGHT / 2), -(WIDTH / 2), HEIGHT, WIDTH);
+                } else {
+                    ctx!.drawImage(img, -(WIDTH / 2), -(HEIGHT / 2), WIDTH, HEIGHT);
+                };
             };
         });
     }, [pdfPages, zoomLevel]);

@@ -25,6 +25,7 @@ export function useSetPDF() {
             reader.readAsDataURL(input);
     
             reader.onload = async () => {
+                // set PDF
                 const newPDF = await PDFDocument.load(reader.result!);
 
                 if(pdfDoc) {
@@ -38,12 +39,11 @@ export function useSetPDF() {
                 const bytes = await mainPDF.save();
                 const pdfBlob = new Blob([bytes as BlobPart], {type: 'application/pdf'});
                 const pdf = await getDocument(URL.createObjectURL(pdfBlob)).promise;
-                
-                setPDFDoc(mainPDF);
 
+                // set PDF Pages
                 for(let i = 1; i <= pdf._pdfInfo.numPages; i++) {
                     const page = await pdf.getPage(i);
-                    const viewport = page.getViewport({ scale: 1.5 });
+                    const viewport = page.getViewport({scale: 2});
         
                     const canvas: HTMLCanvasElement = document.createElement("canvas");
                     const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
@@ -69,6 +69,8 @@ export function useSetPDF() {
 
                     setPDFPages(prev => [...prev, pdfPage]);
                 };
+
+                setPDFDoc(mainPDF);
             };
         } catch (error) {
             setError("setPDFError");
