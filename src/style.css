@@ -20,26 +20,6 @@
 }
 /*Error Popup Animations*/
 
-/*Sidebar Animations*/
-@keyframes in-sidebar {
-    from {
-        transform: translateX(85%)
-    }
-    to {
-        transform: translateX(0)
-    }
-}
-
-@keyframes out-sidebar {
-    from {
-        transform: translateX(0)
-    }
-    to {
-        transform: translateX(85%)
-    }
-}
-/*Sidebar Animations*/
-
 /*Sidebar Scrollbar*/
 #sidebarContainer {
     -ms-overflow-style: none;

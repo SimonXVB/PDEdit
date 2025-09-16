@@ -72,20 +72,23 @@ export function SidebarPage({ page, index, draggingId, setDraggingId }: SideBarI
 
 
     return (
-        <div className="relative">
-            {draggingId === index && 
-                <div className="absolute top-0 left-0 w-full h-full bg-white z-10">
-                    <div className="h-full rounded-xs border-2 border-dashed border-rose-500"></div>
-                </div>
-            }
-            <canvas ref={canvasRef} className="border-[1px] cursor-grab w-[120px]"
-                onDragStart={() => setDraggingId(index)}
-                onDragOver={e => handleDragOver(e)}
-                onDrop={e => handleDrop(e, index)}
-                onDragLeave={e => handleDragLeave(e)}
-                onDragEnd={() => setDraggingId(null)}
-                draggable
-            ></canvas>
+        <div>
+            <div className="relative">
+                {draggingId === index && 
+                    <div className="absolute top-0 left-0 w-full h-full bg-white z-10">
+                        <div className="h-full rounded-lg border-2 border-dashed border-rose-500"></div>
+                    </div>
+                }
+                <canvas ref={canvasRef} className="border-[1px] cursor-grab w-[120px] rounded-lg"
+                    onDragStart={() => setDraggingId(index)}
+                    onDragOver={e => handleDragOver(e)}
+                    onDrop={e => handleDrop(e, index)}
+                    onDragLeave={e => handleDragLeave(e)}
+                    onDragEnd={() => setDraggingId(null)}
+                    draggable
+                ></canvas>
+            </div>
+            <p className="text-center px-1 text-black">{index + 1}</p>
         </div>
     )
 };

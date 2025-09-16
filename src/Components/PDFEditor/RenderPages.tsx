@@ -13,10 +13,10 @@ export function RenderPages() {
             img.src = page.pdfImg;
 
             const is90Degs = (page.rotation === 90 || page.rotation === 270);
-
+            
             const RATIO = is90Degs ? page.width / page.height : page.height / page.width;
-            const WIDTH = window.innerWidth * 0.6;
-            const HEIGHT = (window.innerWidth * RATIO) * 0.6;
+            const WIDTH = window.innerWidth * 0.55;
+            const HEIGHT = (window.innerWidth * RATIO) * 0.55;
 
             img.onload = () => {
                 const ctx = canvasRefs.current[i].getContext("2d");
