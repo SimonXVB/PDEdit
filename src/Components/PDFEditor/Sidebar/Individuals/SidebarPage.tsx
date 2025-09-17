@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { PDFPagesInterface } from "../../../../Context/PDFCTX/pdfContext.ts";
 import { useRearrangePages } from "../../../../Hooks/useRearrangePages.ts";
-import { mainContext } from "../../../../Context/MainCTX/mainContext.ts";
 
 interface SideBarInterface {
     page: PDFPagesInterface, 
@@ -11,8 +10,13 @@ interface SideBarInterface {
 };
 
 export function SidebarPage({ page, index, draggingId, setDraggingId }: SideBarInterface) {
-    const { zoomLevel } = useContext(mainContext);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    
+    const is90Degs = page.rotation === 90 || page.rotation === 270;
+    
+    const RATIO = is90Degs ? page.width / page.height : page.height / page.width;
+    const WIDTH = 120;
+    const HEIGHT = 120 * RATIO;
     
     const { rearrangePages } = useRearrangePages();
     
@@ -41,45 +45,36 @@ export function SidebarPage({ page, index, draggingId, setDraggingId }: SideBarI
     };
 
     useEffect(() => {
-        const rotation = page.rotation;
-        const ctx = canvasRef.current!.getContext("2d");
         const img = new Image();
+        img.src = page.pdfImg;
 
         img.onload = () => {
-            if(rotation === 90 || rotation === 270) {
-                canvasRef.current!.height = (page.width * 0.1);
-                canvasRef.current!.width = (page.height * 0.1);
-    
-                ctx!.save()
-                ctx!.scale(0.1, 0.1);
-                ctx!.translate(page.height / 2, page.width / 2);
-            } else {
-                canvasRef.current!.height = (page.height * 0.1);
-                canvasRef.current!.width = (page.width * 0.1);
-    
-                ctx!.save();
-                ctx!.scale(0.1, 0.1);
-                ctx!.translate(page.width / 2, page.height / 2);
-            };
-    
+            const ctx = canvasRef.current!.getContext("2d");
+
+            canvasRef.current!.width = WIDTH;
+            canvasRef.current!.height = HEIGHT;
+
+            ctx!.translate(WIDTH / 2, HEIGHT / 2);
             ctx!.rotate(page.rotation * (Math.PI / 180));
-            ctx!.drawImage(img, -(page.width / 2), -(page.height / 2), page.width, page.height);
-            ctx!.restore();
+
+            if(is90Degs) {
+                ctx!.drawImage(img, -(HEIGHT / 2), -(WIDTH / 2), HEIGHT, WIDTH);
+            } else {
+                ctx!.drawImage(img, -(WIDTH / 2), -(HEIGHT / 2), WIDTH, HEIGHT);
+            };
         };
-
-        img.src = page.pdfImg;
-    }, [page.pdfImg, page.height, page.rotation, page.width, zoomLevel]);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page.pdfImg, page.rotation]);
 
     return (
-        <div>
+        <div className="flex flex-col justify-center" style={{minHeight: (140 * (page.height / page.width)) + "px"}}>
             <div className="relative">
                 {draggingId === index && 
                     <div className="absolute top-0 left-0 w-full h-full bg-white z-10">
                         <div className="h-full rounded-lg border-2 border-dashed border-rose-500"></div>
                     </div>
                 }
-                <canvas ref={canvasRef} className="border-[1px] cursor-grab w-[120px] rounded-lg"
+                <canvas ref={canvasRef} className="border-[1px] cursor-grab rounded-lg"
                     onDragStart={() => setDraggingId(index)}
                     onDragOver={e => handleDragOver(e)}
                     onDrop={e => handleDrop(e, index)}

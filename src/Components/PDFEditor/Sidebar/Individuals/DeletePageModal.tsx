@@ -1,4 +1,12 @@
+import { useEffect } from "react"
+
 export function DeletePageModal({ removePage, setDeleteIndex }: { removePage: () => void, setDeleteIndex: () => void }) {
+
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {document.body.style.overflow = "scroll"};
+    }, []);
+
     return (
         <div className="fixed flex items-center justify-center top-0 left-0 w-full h-full bg-gray-500/50 z-30">
             <div className="bg-white p-4 pt-2 rounded-xs shadow-lg">

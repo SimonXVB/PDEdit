@@ -39,8 +39,8 @@ export function RenderPages() {
     
     return (
         <div className="flex flex-col overflow-x-auto mx-2 w-full">
-            {pdfPages.map((page, i) => (
-                <div className="mx-auto mb-4" key={page.pdfImg}>
+            {pdfPages.map((_page, i) => (
+                <div className="mx-auto mb-4" key={i}>
                     <canvas className="border-2 border-gray-700" ref={ref => {canvasRefs.current[i] = ref!}}></canvas>
                     <p className="text-black text-center text-lg h-fit p-2 font-semibold">{i + 1}</p>
                 </div>

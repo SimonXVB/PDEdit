@@ -20,7 +20,7 @@ export function PDFEditor() {
     });
 
     return (
-        <div ref={ref} className="min-h-screen h-full">
+        <div ref={ref} className="min-h-dvh h-full">
             <Navbar/>
             <div className="flex">
                 <RenderPages/>

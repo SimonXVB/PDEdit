@@ -16,7 +16,7 @@ export function Sidebar() {
  
     return (
         <>
-            <div className={`fixed top-1/2 -translate-y-1/2 right-0 h-screen flex items-center z-20 transition-all duration-150 ${open ? "translate-x-0" : "translate-x-[calc(100%_-_28px)]"}`}>
+            <div className={`fixed top-1/2 -translate-y-1/2 right-0 h-svh flex items-center z-20 transition-all duration-150 ${open ? "translate-x-0" : "translate-x-[calc(100%_-_28px)]"}`}>
                 <button className="bg-rose-500 p-1 w-7 h-16 cursor-pointer rounded-l-lg hover:bg-rose-400" onClick={() => setOpen(!open)}>
                     {open ? 
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 16 16">
@@ -28,7 +28,7 @@ export function Sidebar() {
                         </svg>
                     }
                 </button>
-                <div className="flex flex-col items-center h-[90%] p-4 pl-2 border-2 border-r-0 rounded-l-lg border-rose-500 bg-white/20 backdrop-blur-sm shadow-2xl" id="sidebarContainer">
+                <div className="flex flex-col items-center h-[90%] p-4 pl-2 border-2 border-r-0 rounded-l-lg border-rose-500 bg-white/20 backdrop-blur-sm shadow-2xl overflow-y-auto" id="sidebarContainer">
                     {pdfPages.map((page, i) => (
                         <div key={i} className="flex mb-1">
                             <PDFPageControls pageNum={pdfDoc!.getPageCount()} index={i} setDeleteIndex={() => setDeleteIndex(i)}/>
