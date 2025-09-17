@@ -36,7 +36,10 @@ export function useSetPDF() {
                 const copyNew = await mainPDF.copyPages(newPDF, newPDF.getPageIndices());
                 copyNew.forEach(page => mainPDF.addPage(page));
 
-                const bytes = await mainPDF.save();
+                await mainPDF.save();
+                setPDFDoc(mainPDF);
+
+                const bytes = await newPDF.save();
                 const pdfBlob = new Blob([bytes as BlobPart], {type: 'application/pdf'});
                 const pdf = await getDocument(URL.createObjectURL(pdfBlob)).promise;
 
@@ -69,8 +72,6 @@ export function useSetPDF() {
 
                     setPDFPages(prev => [...prev, pdfPage]);
                 };
-
-                setPDFDoc(mainPDF);
             };
         } catch (error) {
             setError("setPDFError");
