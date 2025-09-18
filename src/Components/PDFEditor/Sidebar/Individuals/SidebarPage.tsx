@@ -11,37 +11,57 @@ interface SideBarInterface {
 
 export function SidebarPage({ page, index, draggingId, setDraggingId }: SideBarInterface) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const isDragging = useRef<boolean>(false);
+    const offsetX = useRef<number>(0);
+    const offsetY = useRef<number>(0);
     
     const is90Degs = page.rotation === 90 || page.rotation === 270;
-    
+
     const RATIO = is90Degs ? page.width / page.height : page.height / page.width;
     const WIDTH = 120;
     const HEIGHT = 120 * RATIO;
     
     const { rearrangePages } = useRearrangePages();
-    
-    function handleDragOver(e: React.DragEvent<HTMLCanvasElement>) {
-        e.preventDefault();
 
-        e.currentTarget.style.borderColor = "#fb2c36";
-        e.currentTarget.style.outline = "1px solid #fb2c36";
+    function pointerDown(e: React.PointerEvent<HTMLCanvasElement>, index: number) {
+        document.body.classList.add("no-overflow");
+        document.documentElement.classList.add("no-overflow");
+        e.currentTarget.classList.add("dragging");
+
+
+        offsetX.current = e.clientX;
+        offsetY.current = e.clientY;
+
+        setDraggingId(index);
+        isDragging.current = true;
     };
 
-    function handleDragLeave(e: React.DragEvent<HTMLCanvasElement>) {
-        e.preventDefault();
+    function pointerMove(e: React.PointerEvent<HTMLCanvasElement>) {
+        if(!isDragging.current) return;
 
-        e.currentTarget.style.borderColor = "#000000";
-        e.currentTarget.style.outline = "";
+        e.currentTarget.style.left = (e.clientX - offsetX.current) + "px";
+        e.currentTarget.style.top = (e.clientY - offsetY.current) + "px";
     };
 
-    function handleDrop(e: React.DragEvent<HTMLCanvasElement>, id: number) {
-        e.preventDefault();
+    function pointerStop(e: React.PointerEvent<HTMLCanvasElement>) {
+        if(!isDragging.current) return;
 
-        rearrangePages(draggingId!, id);
+        document.body.classList.remove("no-overflow");
+        document.documentElement.classList.remove("no-overflow");
+        e.currentTarget.classList.remove("dragging");
+
+        e.currentTarget.style.left = "0px";
+        e.currentTarget.style.top = "0px";
+
+        const targetId = document.elementFromPoint(e.clientX, e.clientY)?.getAttribute("data-index");
+        
+        if(targetId !== null && Number(targetId) !== draggingId) {
+            rearrangePages(draggingId!, Number(targetId));
+        };
+
         setDraggingId(null);
-
-        e.currentTarget.style.outline = "";
-        e.currentTarget.style.borderColor = "#000000";
+        isDragging.current = false;
     };
 
     useEffect(() => {
@@ -68,19 +88,16 @@ export function SidebarPage({ page, index, draggingId, setDraggingId }: SideBarI
 
     return (
         <div className="flex flex-col justify-center" style={{minHeight: (140 * (page.height / page.width)) + "px"}}>
-            <div className="relative">
-                {draggingId === index && 
-                    <div className="absolute top-0 left-0 w-full h-full bg-white z-10">
-                        <div className="h-full rounded-lg border-2 border-dashed border-rose-500"></div>
-                    </div>
-                }
-                <canvas ref={canvasRef} className="border-[1px] cursor-grab rounded-lg"
-                    onDragStart={() => setDraggingId(index)}
-                    onDragOver={e => handleDragOver(e)}
-                    onDrop={e => handleDrop(e, index)}
-                    onDragLeave={e => handleDragLeave(e)}
-                    onDragEnd={() => setDraggingId(null)}
-                    draggable
+            <div className="relative" style={{width: WIDTH + "px", height: HEIGHT + "px"}}>
+                <div className="absolute top-0 left-0 w-full h-full bg-transparent">
+                    <div className="h-full rounded-lg border-2 border-dashed border-rose-500"></div>
+                </div>
+                <canvas ref={canvasRef} className="relative border-[1px] cursor-grab rounded-lg dnd-target z-10"
+                    onPointerDown={e => pointerDown(e, index)}
+                    onPointerMove={pointerMove}
+                    onPointerUp={pointerStop}
+                    onPointerOut={pointerStop}
+                    data-index={index}
                 ></canvas>
             </div>
             <p className="text-center px-1 text-black">{index + 1}</p>

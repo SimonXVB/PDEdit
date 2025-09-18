@@ -22,3 +22,16 @@
     display: none;
 }
 /*Hide Sidebar Scrollbar*/
+
+/*Drag Styles*/
+.dragging {
+    z-index: 99;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.no-overflow {
+    overflow: hidden !important;
+    overscroll-behavior: none !important;
+}
+/*Drag Styles*/

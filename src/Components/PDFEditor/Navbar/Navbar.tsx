@@ -18,7 +18,7 @@ export function Navbar() {
 
     return (
         <div className="sticky top-0 flex justify-center">
-            <nav className="flex justify-center gap-2 p-3 my-4 rounded-lg bg-white border-2 border-rose-500 shadow-xl">
+            <nav className="flex justify-center gap-2 p-3 my-4 rounded-lg border-2 border-rose-500 shadow-xl bg-white/20 backdrop-blur-sm">
                 <NavbarButton title="Download PDF" onClick={downloadPDF}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>

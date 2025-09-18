@@ -28,7 +28,7 @@ export function Sidebar() {
                         </svg>
                     }
                 </button>
-                <div className="flex flex-col items-center h-[90%] p-4 pl-2 border-2 border-r-0 rounded-l-lg border-rose-500 bg-white/20 backdrop-blur-sm shadow-2xl overflow-y-auto" id="sidebarContainer">
+                <div className={`flex flex-col items-center h-[90%] p-4 pl-2 border-2 border-r-0 rounded-l-lg border-rose-500 bg-white/20 backdrop-blur-sm shadow-2xl ${draggingId !== null ? "overflow-hidden" : "overflow-auto"}`} id="sidebarContainer">
                     {pdfPages.map((page, i) => (
                         <div key={i} className="flex mb-1">
                             <PDFPageControls pageNum={pdfDoc!.getPageCount()} index={i} setDeleteIndex={() => setDeleteIndex(i)}/>
