@@ -46,25 +46,10 @@ export function useSetPDF() {
                 // set PDF Pages
                 for(let i = 1; i <= pdf._pdfInfo.numPages; i++) {
                     const page = await pdf.getPage(i);
-                    const viewport = page.getViewport({scale: 2});
-        
-                    const canvas: HTMLCanvasElement = document.createElement("canvas");
-                    const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
+                    const viewport = page.getViewport({scale: 1});
                     
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
-
-                    const renderParams = {
-                        canvasContext: ctx,
-                        canvas: canvas,
-                        viewport: viewport
-                    };
-                    
-                    await page.render(renderParams).promise;
-                    const img = canvas.toDataURL("image/png");
-
                     const pdfPage = {
-                        pdfImg: img,
+                        pdfPage: page,
                         height: viewport.height,
                         width: viewport.width,
                         rotation: 360

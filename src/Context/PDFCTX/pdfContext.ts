@@ -1,8 +1,9 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 import { PDFDocument } from "pdf-lib";
+import { PDFPageProxy } from "pdfjs-dist";
 
 export interface PDFPagesInterface {
-    pdfImg: string,
+    pdfPage: PDFPageProxy,
     height: number, 
     width: number, 
     rotation: number
