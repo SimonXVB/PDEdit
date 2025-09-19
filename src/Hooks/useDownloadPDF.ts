@@ -11,12 +11,12 @@ export function useDownloadPDF() {
             const dl = document.createElement("a");
 
             const pdf = pdfDoc!;
-            pdf.setTitle("Edited with PDEdit")
-            pdf.setCreator("PDEdit");
+            pdf.setTitle("PDF Doc");
+            pdf.setCreator("PDEdit by SimonXVB");
             pdf.setCreationDate(new Date());
     
             const bytes = await pdf.save();
-            const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
+            const pdfBlob = new Blob([bytes as BlobPart], { type: 'application/pdf' });
     
             dl.href = URL.createObjectURL(pdfBlob);
             dl.download = "Doc.pdf";

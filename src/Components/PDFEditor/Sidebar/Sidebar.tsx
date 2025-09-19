@@ -32,7 +32,7 @@ export function Sidebar() {
                     {pdfPages.map((page, i) => (
                         <div key={i} className="flex mb-1">
                             <PDFPageControls pageNum={pdfDoc!.getPageCount()} index={i} setDeleteIndex={() => setDeleteIndex(i)}/>
-                            <SidebarPage page={page} index={i} draggingId={draggingId} setDraggingId={setDraggingId}/>
+                            <SidebarPage page={page} i={i} draggingId={draggingId} setDraggingId={setDraggingId}/>
                         </div>
                     ))}
                 </div>
