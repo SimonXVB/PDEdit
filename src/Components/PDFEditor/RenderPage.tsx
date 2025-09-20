@@ -39,13 +39,14 @@ export function RenderPage({page, i}: {page: PDFPagesInterface, i: number}) {
             
             await page.pdfPage.render(renderParams).promise;
             pageRef.current!.src = canvas.toDataURL('image/png');
+
             setLoading(false);
         })();
     }, [page.pdfPage, page.rotation]);
     
     return (
         <div className="relative mx-auto mb-4">
-            {loading && <div className="absolute w-full h-full bg-rose-100 border-2 border-black"></div>}
+            {loading && <div className="absolute w-full h-full border-2 border-black shimmer"></div>}
             <img ref={pageRef} style={{height: getHeight(), maxWidth: width * zoomLevel, minWidth: width * zoomLevel}} className="border-2 border-black"/>
             <p className="text-black text-center text-lg font-bold" style={{padding: 8 * zoomLevel + "px"}}>{i + 1}</p>
         </div>

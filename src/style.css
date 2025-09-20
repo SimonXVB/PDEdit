@@ -36,3 +36,12 @@
     to {rotate: 360deg;}
 }
 /*Spin*/
+
+/*Shimmer*/
+.shimmer {
+    background: linear-gradient(-45deg, #ffccd3 30%, #ffe6ea, #ffccd3 70%);
+    background-size: 200%;
+    background-position: 100%;
+    animation: shimmer 1.5s infinite linear;
+}
+/*Shimmer*/
