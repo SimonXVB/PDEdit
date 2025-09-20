@@ -32,7 +32,7 @@ export function Sidebar() {
                         </svg>
                     }
                 </button>
-                <div className={`flex flex-col items-center h-[90%] p-4 pl-2 border-2 border-r-0 rounded-l-lg border-rose-500 bg-white/20 backdrop-blur-sm shadow-2xl`} id="sidebarContainer">
+                <div className={`overflow-y-auto overscroll-contain flex flex-col items-center h-[90%] p-4 pl-2 border-2 border-r-0 rounded-l-lg border-rose-500 bg-white/20 backdrop-blur-sm shadow-2xl`} id="sidebarContainer">
                     {pdfPages.map((page, i) => (
                         <div key={i} className="flex mb-1">
                             <PDFPageControls pageNum={pdfDoc!.getPageCount()} index={i} setDeleteIndex={() => setDeleteIndex(i)} rotatePage={rotatePage} rearrangePages={rearrangePages}/>
