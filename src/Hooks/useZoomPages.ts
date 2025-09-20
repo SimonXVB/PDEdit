@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { mainContext } from "../Context/MainCTX/mainContext";
 
 enum zoomEnum {
@@ -9,19 +9,13 @@ enum zoomEnum {
 export function useZoomPages() {
     const { zoomLevel, setZoomLevel } = useContext(mainContext);
 
+    const startDistance = useRef<number>(0);
+
     function zoomPages(zoom: "plus" | "minus") {
-        if(zoom === zoomEnum.plus && zoomLevel < 2) {
-            if(zoomLevel > 2) return;
-
-            const newZoom = Number((zoomLevel + 0.05).toFixed(2));
-            
-            setZoomLevel(newZoom);
+        if(zoom === zoomEnum.plus && zoomLevel < 2) {            
+            setZoomLevel(Number((zoomLevel + 0.05).toFixed(2)));
         } else if(zoom === zoomEnum.minus && zoomLevel > 0.2) {
-            if(zoomLevel < 0.2) return;
-
-            const newZoom = Number((zoomLevel - 0.05).toFixed(2));
-
-            setZoomLevel(newZoom);
+            setZoomLevel(Number((zoomLevel - 0.05).toFixed(2)));
         };
     };
 
@@ -37,5 +31,36 @@ export function useZoomPages() {
         };
     };
 
-    return { zoomPages, ctrlWheelZoom }
+    function getDistance(e: TouchEvent) {
+        return Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+    };
+
+    function startTouchZoom(e: TouchEvent) {
+        if(e.touches.length === 2) {
+            e.preventDefault();
+
+            startDistance.current = getDistance(e);
+        };
+    };
+
+    function touchZoom(e: TouchEvent) {
+        if(e.touches.length === 2) {
+            e.preventDefault();
+
+            const newDistance = getDistance(e);
+            const distanceThreshold = 10;
+
+            if(!(newDistance > startDistance.current + distanceThreshold || newDistance < startDistance.current - distanceThreshold)) return;
+
+            if(newDistance > startDistance.current) {
+                zoomPages("plus");
+            } else if(newDistance < startDistance.current) {
+                zoomPages("minus");
+            };
+
+            startDistance.current = getDistance(e);
+        };
+    };
+
+    return { zoomPages, ctrlWheelZoom, startTouchZoom, touchZoom }
 };

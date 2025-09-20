@@ -42,7 +42,7 @@ export function RenderPage({page, i}: {page: PDFPagesInterface, i: number}) {
     
     return (
         <div className="mx-auto mb-4">
-            <img ref={pageRef} style={{height: getHeight(), width: width * zoomLevel}} className="border-2 rounded-lg border-black"/>
+            <img ref={pageRef} style={{height: getHeight(), maxWidth: width * zoomLevel, minWidth: width * zoomLevel}} className="border-2 border-black"/>
             <p className="text-black text-center h-fit font-semibold" style={{padding: 8 * zoomLevel + "px"}}>{i + 1}</p>
         </div>
     );
