@@ -29,3 +29,10 @@
     outline: 1px solid #fb2c36;
 }
 /*Drag Style*/
+
+/*Spin*/
+@keyframes spin {
+    from {rotate: 0deg;}
+    to {rotate: 360deg;}
+}
+/*Spin*/

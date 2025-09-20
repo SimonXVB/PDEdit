@@ -1,9 +1,11 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { PDFPagesInterface } from "../../Context/PDFCTX/pdfContext";
 import { mainContext } from "../../Context/MainCTX/mainContext";
 
 export function RenderPage({page, i}: {page: PDFPagesInterface, i: number}) {
     const { zoomLevel } = useContext(mainContext);
+
+    const [loading, setLoading] = useState<boolean>(true);
 
     const pageRef = useRef<HTMLImageElement>(null);
     const prevRotation = useRef<number>(page.rotation);
@@ -37,13 +39,15 @@ export function RenderPage({page, i}: {page: PDFPagesInterface, i: number}) {
             
             await page.pdfPage.render(renderParams).promise;
             pageRef.current!.src = canvas.toDataURL('image/png');
+            setLoading(false);
         })();
     }, [page.pdfPage, page.rotation]);
     
     return (
-        <div className="mx-auto mb-4">
+        <div className="relative mx-auto mb-4">
+            {loading && <div className="absolute w-full h-full bg-rose-100 border-2 border-black"></div>}
             <img ref={pageRef} style={{height: getHeight(), maxWidth: width * zoomLevel, minWidth: width * zoomLevel}} className="border-2 border-black"/>
             <p className="text-black text-center text-lg font-bold" style={{padding: 8 * zoomLevel + "px"}}>{i + 1}</p>
         </div>
     );
-}
+};

@@ -1,22 +1,17 @@
 import { useContext, useState } from "react"
 import { pdfContext } from "../../../Context/PDFCTX/pdfContext.ts";
-import { PDFPageControls } from "./Individuals/PDFPageControls.tsx";
 import { SidebarPage } from "./Individuals/SidebarPage.tsx";
 import { DeletePageModal } from "./Individuals/DeletePageModal.tsx";
 import { useRemovePage } from "../../../Hooks/useRemovePage.ts";
-import { useRotatePage } from "../../../Hooks/useRotatePage.ts";
-import { useRearrangePages } from "../../../Hooks/useRearrangePages.ts";
 
 export function Sidebar() {
-    const { pdfPages, pdfDoc } = useContext(pdfContext);
+    const { pdfPages } = useContext(pdfContext);
 
     const [open, setOpen] = useState<boolean>(window.innerWidth <= 800 ? false : true);
     const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
     const [draggingId, setDraggingId] = useState<number | null>(null);
 
     const { removePage } = useRemovePage();
-    const { rotatePage } = useRotatePage();
-    const { rearrangePages } = useRearrangePages();
  
     return (
         <>
@@ -34,14 +29,23 @@ export function Sidebar() {
                 </button>
                 <div className={`overflow-y-auto overscroll-contain flex flex-col items-center h-[90%] p-4 pl-2 border-2 border-r-0 rounded-l-lg border-rose-500 bg-white/20 backdrop-blur-sm shadow-2xl`} id="sidebarContainer">
                     {pdfPages.map((page, i) => (
-                        <div key={i} className="flex mb-1">
-                            <PDFPageControls pageNum={pdfDoc!.getPageCount()} index={i} setDeleteIndex={() => setDeleteIndex(i)} rotatePage={rotatePage} rearrangePages={rearrangePages}/>
-                            <SidebarPage page={page} i={i} draggingId={draggingId} setDraggingId={setDraggingId}/>
-                        </div>
+                        <SidebarPage 
+                            key={i}
+                            i={i} 
+                            page={page} 
+                            draggingId={draggingId} 
+                            setDraggingId={setDraggingId} 
+                            setDeleteIndex={setDeleteIndex}
+                        />
                     ))}
                 </div>
             </div>
-            {deleteIndex !== null && <DeletePageModal removePage={() => {removePage(deleteIndex); setDeleteIndex(null)}} setDeleteIndex={() => setDeleteIndex(null)}/>}
+            {deleteIndex !== null && 
+                <DeletePageModal 
+                    removePage={() => {removePage(deleteIndex); setDeleteIndex(null)}} 
+                    setDeleteIndex={() => setDeleteIndex(null)}
+                />
+            }
         </>
-    )
+    );
 };

@@ -17,7 +17,7 @@ export function Navbar() {
     };
 
     return (
-        <div className="sticky top-0 flex justify-center">
+        <div className="sticky top-0 flex justify-center z-20">
             <nav className="flex justify-center gap-2 p-3 my-4 rounded-lg border-2 border-rose-500 shadow-xl bg-white/20 backdrop-blur-sm">
                 <NavbarButton title={"Download PDF"} onClick={downloadPDF}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
