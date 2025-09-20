@@ -1,11 +1,14 @@
-import { useRotatePage } from "../../../../Hooks/useRotatePage.ts";
-import { useRearrangePages } from "../../../../Hooks/useRearrangePages.ts";
 import { SidebarButton } from "./SidebarButton.tsx";
 
-export function PDFPageControls({ pageNum, index, setDeleteIndex }: { pageNum: number, index: number, setDeleteIndex: () => void }) {
-    const { rotatePage } = useRotatePage();
-    const { rearrangePages } = useRearrangePages();
+interface ControlsInterface {
+    pageNum: number, 
+    index: number, 
+    setDeleteIndex: () => void, 
+    rotatePage: (index: number) => void, 
+    rearrangePages: (currentPage: number, rearrangePage: number) => void
+};
 
+export function PDFPageControls({ pageNum, index, setDeleteIndex, rotatePage, rearrangePages }: ControlsInterface) {
     return (
         <div className="flex flex-col justify-center mt-1 mb-2 mr-0.5">
             <SidebarButton onclick={() => rotatePage(index)} title={"Rotate Page"}>

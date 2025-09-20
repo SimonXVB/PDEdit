@@ -7,7 +7,7 @@ export function RenderPage({page, i}: {page: PDFPagesInterface, i: number}) {
 
     const pageRef = useRef<HTMLImageElement>(null);
     const prevRotation = useRef<number>(page.rotation);
-
+    
     const is90Degs = page.rotation === 90 || page.rotation === 270;
     const ratio = is90Degs ? page.width / page.height : page.height / page.width;
     const width = window.innerWidth * 0.55;
@@ -43,7 +43,7 @@ export function RenderPage({page, i}: {page: PDFPagesInterface, i: number}) {
     return (
         <div className="mx-auto mb-4">
             <img ref={pageRef} style={{height: getHeight(), maxWidth: width * zoomLevel, minWidth: width * zoomLevel}} className="border-2 border-black"/>
-            <p className="text-black text-center h-fit font-semibold" style={{padding: 8 * zoomLevel + "px"}}>{i + 1}</p>
+            <p className="text-black text-center text-lg font-bold" style={{padding: 8 * zoomLevel + "px"}}>{i + 1}</p>
         </div>
     );
 }

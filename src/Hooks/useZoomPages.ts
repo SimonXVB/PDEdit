@@ -7,16 +7,20 @@ enum zoomEnum {
 };
 
 export function useZoomPages() {
-    const { zoomLevel, setZoomLevel } = useContext(mainContext);
+    const { setZoomLevel } = useContext(mainContext);
 
     const startDistance = useRef<number>(0);
 
     function zoomPages(zoom: "plus" | "minus") {
-        if(zoom === zoomEnum.plus && zoomLevel < 2) {            
-            setZoomLevel(Number((zoomLevel + 0.05).toFixed(2)));
-        } else if(zoom === zoomEnum.minus && zoomLevel > 0.2) {
-            setZoomLevel(Number((zoomLevel - 0.05).toFixed(2)));
-        };
+        setZoomLevel(prev => {
+            if(zoom === zoomEnum.plus && prev < 2) {            
+                return Number((prev + 0.05).toFixed(2));
+            } else if(zoom === zoomEnum.minus && prev > 0.2) {
+                return Number((prev - 0.05).toFixed(2));
+            } else {
+                return prev;
+            };
+        });
     };
 
     function ctrlWheelZoom(e: WheelEvent) {
