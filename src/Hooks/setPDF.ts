@@ -37,7 +37,6 @@ export function useSetPDF() {
                 copyNew.forEach(page => mainPDF.addPage(page));
 
                 await mainPDF.save();
-                setPDFDoc(mainPDF);
 
                 const bytes = await newPDF.save();
                 const pdfBlob = new Blob([bytes as BlobPart], {type: 'application/pdf'});
@@ -57,6 +56,8 @@ export function useSetPDF() {
 
                     setPDFPages(prev => [...prev, pdfPage]);
                 };
+
+                setPDFDoc(mainPDF);
             };
         } catch (error) {
             setError("setPDFError");

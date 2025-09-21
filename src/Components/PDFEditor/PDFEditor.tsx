@@ -2,8 +2,8 @@ import { useContext, useEffect, useRef } from "react";
 import { useZoomPages } from "../../Hooks/useZoomPages";
 import { Navbar } from "./Navbar/Navbar";
 import { Sidebar } from "./Sidebar/Sidebar";
-import { pdfContext } from "../../Context/PDFCTX/pdfContext";
 import { RenderPage } from "./RenderPage";
+import { pdfContext } from "../../Context/PDFCTX/pdfContext";
 
 export function PDFEditor() {
     const { pdfPages } = useContext(pdfContext);

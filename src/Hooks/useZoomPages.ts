@@ -13,7 +13,7 @@ export function useZoomPages() {
 
     function zoomPages(zoom: "plus" | "minus") {
         setZoomLevel(prev => {
-            if(zoom === zoomEnum.plus && prev < 2) {            
+            if(zoom === zoomEnum.plus && prev < 2) {
                 return Number((prev + 0.05).toFixed(2));
             } else if(zoom === zoomEnum.minus && prev > 0.2) {
                 return Number((prev - 0.05).toFixed(2));

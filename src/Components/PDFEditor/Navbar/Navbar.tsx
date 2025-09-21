@@ -33,7 +33,7 @@ export function Navbar() {
                             <path fillRule="evenodd" d="M3 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
                         </svg>
                     </NavbarButton>
-                    <p className="font-bold rounded-xl text-black mx-2 text-lg" title="Zoom Level">{(zoomLevel * 100).toFixed(0)}%</p>
+                    <p className="font-bold rounded-xl text-black text-center mx-2 text-lg w-[50px]" title="Zoom Level">{(zoomLevel * 100).toFixed(0)}%</p>
                     <NavbarButton title={"Zoom In"} onClick={() => zoomPages("plus")}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0"/>

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { pdfContext, PDFPagesInterface } from "../../../../Context/PDFCTX/pdfContext.ts";
 import { useRearrangePages } from "../../../../Hooks/useRearrangePages.ts";
 import { useRotatePage } from "../../../../Hooks/useRotatePage.ts";
@@ -16,11 +16,10 @@ export function SidebarPage({ page, i, draggingId, setDraggingId, setDeleteIndex
     const { pdfDoc } = useContext(pdfContext);
 
     const [loading, setLoading] = useState<boolean>(true);
+    const [src, setSrc] = useState<string | undefined>(undefined);
 
     const { rearrangePages } = useRearrangePages();
     const { rotatePage } = useRotatePage();
-
-    const pageRef = useRef<HTMLImageElement>(null);
     
     const is90Degs = page.rotation === 90 || page.rotation === 270;
     const ratio = is90Degs ? page.width / page.height : page.height / page.width;
@@ -63,8 +62,8 @@ export function SidebarPage({ page, i, draggingId, setDraggingId, setDeleteIndex
             };
             
             await page.pdfPage.render(renderParams).promise;
-            pageRef.current!.src = canvas.toDataURL('image/png');
 
+            setSrc(canvas.toDataURL('image/png'));
             setLoading(false);
         })();
     }, [page.pdfPage, page.rotation]);
@@ -75,7 +74,7 @@ export function SidebarPage({ page, i, draggingId, setDraggingId, setDeleteIndex
             <div className={`flex transition-opacity duration-1000 ${loading ? "opacity-0" : "opacity-100"}`}>
                 <PDFPageControls pageCount={pdfDoc!.getPageCount()} index={i} setDeleteIndex={() => setDeleteIndex(i)} rotatePage={rotatePage} rearrangePages={rearrangePages}/>
                 <div>
-                    <img ref={pageRef} className="relative border-[1px] cursor-grab" height={height} width={width}
+                    <img className="relative border-[1px] cursor-grab" height={height} width={width} src={src}
                         onDragStart={() => setDraggingId(i)}
                         onDragOver={e => handleDragOver(e)}
                         onDrop={e => handleDrop(e, i)}
