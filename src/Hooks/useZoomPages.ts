@@ -9,8 +9,6 @@ enum zoomEnum {
 export function useZoomPages() {
     const { setZoomLevel } = useContext(mainContext);
 
-    const startDistance = useRef<number>(0);
-
     function zoomPages(zoom: "plus" | "minus") {
         setZoomLevel(prev => {
             if(zoom === zoomEnum.plus && prev < 2) {
@@ -34,6 +32,8 @@ export function useZoomPages() {
             };
         };
     };
+
+    const startDistance = useRef<number>(0);
 
     function getDistance(e: TouchEvent) {
         return Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);

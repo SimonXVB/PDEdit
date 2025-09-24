@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { pdfContext } from "../Context/PDFCTX/pdfContext";
-import { degrees } from "pdf-lib";
 import { mainContext } from "../Context/MainCTX/mainContext";
+import { degrees } from "pdf-lib";
+import { getDocument } from "pdfjs-dist";
 
 export function useRotatePage() {
     const { pdfDoc, pdfPages, setPDFPages, setPDFDoc } = useContext(pdfContext);
@@ -17,22 +18,22 @@ export function useRotatePage() {
             pdf.removePage(index);
             page.setRotation(degrees(rotation + 90));
             pdf.insertPage(index, page);
-    
-            await pdf.save();
 
-            const array = pdfPages.map((page, i) => {
+            const bytes = await pdf.save();
+            const pdfBlob = new Blob([bytes as BlobPart], {type: 'application/pdf'});
+            const newPDF = await getDocument(URL.createObjectURL(pdfBlob)).promise;
+
+            const updatedPage = await newPDF.getPage(index + 1);
+
+            const newPages = pdfPages.map((page, i) => {
                 if(i === index) {
-                    const updatedEl = {
-                        ...page,
-                        rotation: rotation + 90
-                    };
-                    return updatedEl;
+                    return updatedPage;
                 } else {
                     return page;
                 };
             });
 
-            setPDFPages(array);
+            setPDFPages(newPages);
             setPDFDoc(pdf);
         } catch (error) {
             setError("rotatePageError");

@@ -45,16 +45,7 @@ export function useSetPDF() {
                 // set PDF Pages
                 for(let i = 1; i <= pdf._pdfInfo.numPages; i++) {
                     const page = await pdf.getPage(i);
-                    const viewport = page.getViewport({scale: 1});
-                    
-                    const pdfPage = {
-                        pdfPage: page,
-                        height: viewport.height,
-                        width: viewport.width,
-                        rotation: 360
-                    };
-
-                    setPDFPages(prev => [...prev, pdfPage]);
+                    setPDFPages(prev => [...prev, page]);
                 };
 
                 setPDFDoc(mainPDF);
